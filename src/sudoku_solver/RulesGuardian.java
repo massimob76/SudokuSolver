@@ -1,7 +1,7 @@
 package sudoku_solver;
 
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 public class RulesGuardian {
 	
@@ -9,6 +9,23 @@ public class RulesGuardian {
 	private int[] v = new int[9];
 	private int[] h = new int[9];
 	private int[] s = new int[9];
+	
+	public RulesGuardian() {
+		v = new int[9];
+		h = new int[9];
+		s = new int[9];
+	}
+	
+	private RulesGuardian(int[] v, int[] h, int[] s) {
+		this.v = v;
+		this.h = h;
+		this.s = s;
+	}
+	
+	public RulesGuardian clone() {
+		return new RulesGuardian(Arrays.copyOf(this.v, this.v.length), 
+				Arrays.copyOf(this.h, this.h.length), Arrays.copyOf(this.s, this.s.length));
+	}
 	
 	@SuppressWarnings("serial")
 	public class IllegalValue extends RuntimeException {
@@ -39,13 +56,12 @@ public class RulesGuardian {
 	}
 	
 	public int getNumberOfPossibleValuesPerCell(Cell cell) {
-		System.out.println(Integer.toBinaryString(getPossibleValueInBitsPerCell(cell)));
 		return Integer.bitCount(getPossibleValueInBitsPerCell(cell));
 	}
 	
-	public List<Integer> getPossibleValuesPerCell(Cell cell) {
+	public LinkedList<Integer> getPossibleValuesPerCell(Cell cell) {
 		int valuesInBits = getPossibleValueInBitsPerCell(cell);
-		List<Integer> possibleValues = new LinkedList<Integer>();
+		LinkedList<Integer> possibleValues = new LinkedList<Integer>();
 		int index = 1;
 		for (int value = 1; value <= 9; value++) {
 			if ((valuesInBits & index) != 0) {

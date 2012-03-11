@@ -2,8 +2,8 @@ package sudoku_solver;
 
 public class Cell {
 	
-	private static final int MIN_POS = 0;
-	private static final int MAX_POS = 8;
+	public static final int MIN_POS = 0;
+	public static final int MAX_POS = 8;
 	private static final int MIN_VALUE = 1;
 	private static final int MAX_VALUE = 9;
 	
@@ -31,6 +31,17 @@ public class Cell {
 		setValue(value);
 	}
 	
+	private Cell(int col, int row, int square, int value) {
+		this.col = col;
+		this.row = row;
+		this.square = square;
+		this.value = value;
+	}
+	
+	public Cell clone() {
+		return new Cell(this.col, this.row, this.square, this.value);
+	}
+	
 	public int getRow() {
 		return row;
 	}
@@ -54,6 +65,16 @@ public class Cell {
 	
 	public String toString() {
 		return "cell: (" + col + "," + row + ") value: " + value;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Cell) {
+			Cell otherCell = (Cell)o;
+			return (otherCell.col == this.col) && (otherCell.row == this.row);
+		} else {
+			return false;
+		}
 	}
 	
 	private void verifyPosition(int pos) {

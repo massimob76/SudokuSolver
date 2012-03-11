@@ -68,6 +68,51 @@ public class RulesGuardianTest {
 	}
 	
 	@Test
+	public void getNumberOfPossibleValuesPerCellReturnsOneWhenThereIsOnlyOnePossibility() {
+		iut.addCellValue(new Cell(0,0,1));
+		iut.addCellValue(new Cell(1,0,2));
+		iut.addCellValue(new Cell(2,0,3));
+		iut.addCellValue(new Cell(0,1,4));
+		iut.addCellValue(new Cell(0,2,5));
+		iut.addCellValue(new Cell(2,2,6));
+		iut.addCellValue(new Cell(3,2,7));
+		iut.addCellValue(new Cell(1,3,8));
+		int expected = 1;
+		assertEquals(expected, iut.getNumberOfPossibleValuesPerCell(new Cell(1,2)));
+	}
+	
+	@Test
+	public void getNumberOfPossibleValuesPerCellReturnsZeroWhenThereAreNotPossibleOptions() {
+		iut.addCellValue(new Cell(0,0,1));
+		iut.addCellValue(new Cell(1,0,2));
+		iut.addCellValue(new Cell(2,0,3));
+		iut.addCellValue(new Cell(0,1,4));
+		iut.addCellValue(new Cell(0,2,5));
+		iut.addCellValue(new Cell(2,2,6));
+		iut.addCellValue(new Cell(3,2,7));
+		iut.addCellValue(new Cell(1,3,8));
+		iut.addCellValue(new Cell(2,1,9));
+		int expected = 0;
+		assertEquals(expected, iut.getNumberOfPossibleValuesPerCell(new Cell(1,2)));
+	}
+	
+	@Test
+	public void cloneShouldReturnACompletelyIndependentCopyOfTheObject() {
+		iut.addCellValue(new Cell(0,0,1));
+		iut.addCellValue(new Cell(1,0,2));
+		iut.addCellValue(new Cell(2,0,3));
+		iut.addCellValue(new Cell(0,1,4));
+		iut.addCellValue(new Cell(0,2,5));
+		iut.addCellValue(new Cell(2,2,6));
+		iut.addCellValue(new Cell(3,2,7));
+		iut.addCellValue(new Cell(1,3,8));
+		RulesGuardian cloned = iut.clone();
+		iut.addCellValue(new Cell(2,1,9));
+		assertEquals(0, iut.getNumberOfPossibleValuesPerCell(new Cell(1,2)));
+		assertEquals(1, cloned.getNumberOfPossibleValuesPerCell(new Cell(1,2)));
+	}
+	
+	@Test
 	public void toStringShouldReturnANicelyFormattedString() {
 		iut.addCellValue(new Cell(1,0,1));
 		iut.addCellValue(new Cell(0,1,2));

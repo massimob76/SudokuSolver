@@ -46,4 +46,40 @@ public class CellTest {
 		} catch (Cell.OutOfBoundsValue e) {
 		}
 	}
+	
+	@Test
+	public void cellsWithSamePositionShouldBeConsideredEqual() {
+		Cell cellA = new Cell(3,5,7);
+		Cell cellB = new Cell(3,5);
+		assertTrue(cellA.equals(cellB));
+	}
+	
+	@Test
+	public void cellsWithDistinctPositionShouldBeConsideredNotEqual() {
+		Cell cellA = new Cell(1,5,7);
+		Cell cellB = new Cell(3,5);
+		assertFalse(cellA.equals(cellB));
+	}
+	
+	@Test
+	public void cloneShouldReturnACompletelyIndependentCopyOfTheCell() {
+		int expectedCol = 1;
+		int expectedRow = 5;
+		int expectedSquare = 3;
+		int expectedValue = 7;
+		Cell cellA = new Cell(expectedCol, expectedRow);
+		Cell cellB = cellA.clone();
+		cellA.setValue(expectedValue);
+		
+		assertEquals(expectedCol, cellA.getCol());
+		assertEquals(expectedRow, cellA.getRow());
+		assertEquals(expectedSquare, cellA.getSquare());
+		assertEquals(expectedValue, cellA.getValue());
+		
+		assertEquals(expectedCol, cellB.getCol());
+		assertEquals(expectedRow, cellB.getRow());
+		assertEquals(expectedSquare, cellB.getSquare());
+		assertEquals(0, cellB.getValue());
+	}
+	
 }
