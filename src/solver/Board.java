@@ -118,7 +118,6 @@ public class Board implements Callable<Solution> {
 			clonedCell.setValue(value);
 			Board clonedBoard = this.clone();
 			clonedBoard.addSolvedCell(clonedCell);
-			System.out.println("about to submit: " + clonedBoard);
 			exec.submit(clonedBoard);
 		}
 	}
