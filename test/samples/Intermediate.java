@@ -1,8 +1,10 @@
 package samples;
 
-public class Intermediate {
+import user_interaction.Sample;
+
+public class Intermediate implements Sample {
 	
-	private String[] example = new String[] {
+	private String[] game = new String[] {
 			"-2-6-8---",
 			"58---97--",
 			"----4----",
@@ -26,8 +28,8 @@ public class Intermediate {
 			"745316892",
 	};
 	
-	public String[] getExample() {
-		return example;
+	public String[] getGame() {
+		return game;
 	}
 	
 	public String[] getSolution() {

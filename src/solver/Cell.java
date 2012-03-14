@@ -1,6 +1,6 @@
 package solver;
 
-public class Cell {
+public class Cell implements Comparable<Cell> {
 	
 	public static final int MIN_POS = 0;
 	public static final int MAX_POS = 8;
@@ -86,6 +86,16 @@ public class Cell {
 	private void verifyValue(int value) {
 		if (value < MIN_VALUE || value > MAX_VALUE) {
 			throw new OutOfBoundsValue("out of bound value: " + value);
+		}
+	}
+
+	@Override
+	public int compareTo(Cell otherCell) {
+		int rowDiff = row - otherCell.row;
+		if (rowDiff!=0) {
+			return rowDiff;
+		} else {
+			return col - otherCell.col;
 		}
 	}
 }

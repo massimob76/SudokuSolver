@@ -1,8 +1,10 @@
 package samples;
 
-public class Crazy {
+import user_interaction.Sample;
+
+public class Crazy implements Sample {
 	
-	private String[] example = new String[] {
+	private String[] game = new String[] {
 			"-2-------",
 			"---6----3",
 			"-74-8----",
@@ -26,8 +28,8 @@ public class Crazy {
 			"731852649",
 	};
 	
-	public String[] getExample() {
-		return example;
+	public String[] getGame() {
+		return game;
 	}
 	
 	public String[] getSolution() {

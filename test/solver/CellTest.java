@@ -2,6 +2,10 @@ package solver;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.Test;
 
 import solver.Cell;
@@ -84,4 +88,33 @@ public class CellTest {
 		assertEquals(0, cellB.getValue());
 	}
 	
+	@Test
+	public void itShouldBePossibleToSortACellList() {
+		List<Cell> list = getUnsortedListOfCells();
+		Collections.sort(list);
+		List<Cell> sortedList = getSortedListofCells();
+		assertEquals(sortedList, list);
+	}
+
+	static List<Cell> getSortedListofCells() {
+		List<Cell> expectedList = new LinkedList<Cell>();
+		expectedList.add(new Cell(1,2,3));
+		expectedList.add(new Cell(4,3,7));
+		expectedList.add(new Cell(4,4,4));
+		expectedList.add(new Cell(2,5,1));
+		expectedList.add(new Cell(4,5,8));
+		expectedList.add(new Cell(3,6,3));
+		return expectedList;
+	}
+
+	static List<Cell> getUnsortedListOfCells() {
+		List<Cell> list = new LinkedList<Cell>();
+		list.add(new Cell(1,2,3));
+		list.add(new Cell(4,5,8));
+		list.add(new Cell(4,3,7));
+		list.add(new Cell(2,5,1));
+		list.add(new Cell(3,6,3));
+		list.add(new Cell(4,4,4));
+		return list;
+	}
 }

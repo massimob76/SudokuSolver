@@ -1,8 +1,10 @@
 package samples;
 
-public class Difficult2 {
+import user_interaction.Sample;
+
+public class Difficult2 implements Sample {
 	
-	private String[] example = new String[] {
+	private String[] game = new String[] {
 			"2--3-----",
 			"8-4-62--3",
 			"-138--2--",
@@ -26,8 +28,8 @@ public class Difficult2 {
 			"789641532",
 	};
 	
-	public String[] getExample() {
-		return example;
+	public String[] getGame() {
+		return game;
 	}
 	
 	public String[] getSolution() {
