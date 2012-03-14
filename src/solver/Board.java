@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
-public class Board implements Callable<Solution> {
+public class Board implements Callable<List<Cell>> {
 	
 	private static final int NO_OPTIONS = 0;
 	private static final int ONE_OPTION_ONLY = 1;
@@ -62,18 +62,27 @@ public class Board implements Callable<Solution> {
 	}
 
 	@Override
-	public Solution call() {
-		Cell solvedCell = findNextSolvedCell();
-		while (!isGameSolved() && solvedCell != null) {
-			addSolvedCell(solvedCell);
-			solvedCell = findNextSolvedCell();
-		}
+	public List<Cell> call() {
 		
-		return isGameSolved() ? new Solution(solvedCells) : null;
+		while (!isGameSolved()) {
+			Cell solvedCell = findNextSolvedCell();
+			if (solvedCell == null) {
+				return null;
+			} else {
+				addSolvedCell(solvedCell);
+			}
+		}
+		return solvedCells;
 	}
 	
 	boolean isGameSolved() {
 		return missingCells.isEmpty();
+	}
+	
+	public void addSolvedCells(List<Cell> solvedCells) {
+		for (Cell solvedCell: solvedCells) {
+			addSolvedCell(solvedCell);
+		}
 	}
 
 	public void addSolvedCell(Cell solvedCell) {

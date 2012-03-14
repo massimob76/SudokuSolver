@@ -2,6 +2,7 @@ package solver;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,8 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import samples.Intermediate;
 import solver.Board;
 import solver.Cell;
+
+import user_interaction.Utilities;
 
 import static org.mockito.Mockito.*;
 
@@ -177,5 +181,51 @@ public class BoardTest {
 		int value = rowInSquare + colInSquare * 3 + cell.getSquare();
 		cell.setValue(value % 9 + 1);
 		return cell;
+	}
+	
+	@Test
+	public void boardCanSolveASimpleSudokuGame() {
+		List<Cell> expected = Utilities.loadSolution(new Intermediate());
+		List<Cell> solvedCells = filterOutCellsWithValueOne(expected);
+		iut.addSolvedCells(solvedCells);
+		List<Cell> actual = iut.call();
+		Collections.sort(actual);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void boardCanDetectWhenAGameCannotBeSolved() {
+		List<Cell> solvedGame = Utilities.loadSolution(new Intermediate());
+		List<Cell> impossibleGame = transformGame(solvedGame);
+		iut.addSolvedCells(impossibleGame);
+		List<Cell> actual = iut.call();
+		assertNull(actual);
+	}
+	
+	private List<Cell> transformGame(List<Cell> solvedGame) {
+		List<Cell> list = filterOutCellsWithValueOne(solvedGame);
+		return replaceCellsWithValueTwoWithValueOneOnEvenLines(list);
+	}
+
+	private List<Cell> replaceCellsWithValueTwoWithValueOneOnEvenLines(List<Cell> list) {
+		List<Cell> replaced = new LinkedList<Cell>();
+		for (Cell cell: list) {
+			if (cell.getRow()%2 == 0 && cell.getValue()==2) {
+				replaced.add(new Cell(cell.getCol(), cell.getRow(), 1));
+			} else {
+				replaced.add(cell);
+			}
+		}
+		return replaced;
+	}
+
+	private List<Cell> filterOutCellsWithValueOne(List<Cell> list) {
+		List<Cell> filtered = new LinkedList<Cell>();
+		for (Cell cell: list) {
+			if (cell.getValue()!=1) {
+				filtered.add(cell);
+			}
+		}
+		return filtered;
 	}
 }
