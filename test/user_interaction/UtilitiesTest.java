@@ -54,7 +54,7 @@ public class UtilitiesTest {
 	@Test
 	public void getNicelyFormattedOutputFromCellListTest() {
 		List<Cell> game = Utilities.loadGame(new SampleTest());
-		String actual = Utilities.getNicelyFormattedOutputFromCellList(game);
+		String actual = Utilities.getNicelyFormattedOutputFromSortedCellList(game);
 		System.out.println(actual);
 	}
 	

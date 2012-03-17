@@ -29,7 +29,7 @@ public class Utilities {
 		return list;
 	}
 	
-	public static String getNicelyFormattedOutputFromCellList(List<Cell> list) {
+	public static String getNicelyFormattedOutputFromSortedCellList(List<Cell> list) {
 		
 		class Formatter {
 			
