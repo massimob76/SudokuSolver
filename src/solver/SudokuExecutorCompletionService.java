@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,9 +13,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SudokuExecutorCompletionService extends ExecutorCompletionService<Solution> {
 	
 	private final AtomicInteger noOfSubmittedTasks = new AtomicInteger(0);
+	private final ExecutorService exec;
+	
+	private SudokuExecutorCompletionService(ExecutorService exec) {
+		super(exec);
+		this.exec = exec;
+	}
 	
 	public SudokuExecutorCompletionService() {
-		super(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()));
+		this(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()));
 	}
 	
 	public int getNoOfSubmittedTasks() {
@@ -37,7 +44,8 @@ public class SudokuExecutorCompletionService extends ExecutorCompletionService<S
 				solutions.add(solution);
 			}
 		}
+		exec.shutdown();
 		return solutions;
 	}
-
+	
 }

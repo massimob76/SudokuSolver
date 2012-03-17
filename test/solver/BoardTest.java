@@ -11,11 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import samples.Intermediate;
+import samples.Impossible;
+import samples.VeryEasyNoNeedOfMultipleThreads;
 import solver.Board;
 import solver.Cell;
-
-import user_interaction.Utilities;
+import user_interaction.Game;
 
 import static org.mockito.Mockito.*;
 
@@ -186,47 +186,21 @@ public class BoardTest {
 	
 	@Test
 	public void boardCanSolveASimpleSudokuGame() {
-		List<Cell> solution = Utilities.loadSolution(new Intermediate());
-		List<Cell> solvedCells = filterOutCellsWithValueOne(solution);
+		Game game = new VeryEasyNoNeedOfMultipleThreads();
+		List<Cell> solvedCells = game.loadUnsolvedGame();
 		iut.addSolvedCells(solvedCells);
-		Solution expected = new Solution(solution);
+		Solution expected = game.loadSolution();
 		Solution actual = iut.call();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	public void boardCanDetectWhenAGameCannotBeSolved() {
-		List<Cell> solution = Utilities.loadSolution(new Intermediate());
-		List<Cell> impossibleGame = transformGame(solution);
-		iut.addSolvedCells(impossibleGame);
+		Game game = new Impossible();
+		List<Cell> solvedCells = game.loadUnsolvedGame();
+		iut.addSolvedCells(solvedCells);
 		Solution actual = iut.call();
 		assertNull(actual);
 	}
 	
-	private List<Cell> transformGame(List<Cell> solvedGame) {
-		List<Cell> list = filterOutCellsWithValueOne(solvedGame);
-		return replaceCellsWithValueTwoWithValueOneOnEvenLines(list);
-	}
-
-	private List<Cell> replaceCellsWithValueTwoWithValueOneOnEvenLines(List<Cell> list) {
-		List<Cell> replaced = new LinkedList<Cell>();
-		for (Cell cell: list) {
-			if (cell.getRow()%2 == 0 && cell.getValue()==2) {
-				replaced.add(new Cell(cell.getCol(), cell.getRow(), 1));
-			} else {
-				replaced.add(cell);
-			}
-		}
-		return replaced;
-	}
-
-	private List<Cell> filterOutCellsWithValueOne(List<Cell> list) {
-		List<Cell> filtered = new LinkedList<Cell>();
-		for (Cell cell: list) {
-			if (cell.getValue()!=1) {
-				filtered.add(cell);
-			}
-		}
-		return filtered;
-	}
 }

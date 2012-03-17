@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import samples.SampleTest;
-import user_interaction.Utilities;
+import samples.PartialGame;
 
 public class SolutionTest {
 	
@@ -51,7 +50,7 @@ public class SolutionTest {
 	
 	@Test
 	public void toStringCreatesANicelyFormattedOutputString() {
-		List<Cell> game = Utilities.loadGame(new SampleTest());
+		List<Cell> game = new PartialGame().loadUnsolvedGame();
 		iut = new Solution(game);
 		String expected = 
 			"\n+-+-+-+-+-+-+-+-+-+" +

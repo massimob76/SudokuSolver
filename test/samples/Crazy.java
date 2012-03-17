@@ -1,10 +1,10 @@
 package samples;
 
-import user_interaction.Sample;
+import user_interaction.Game;
 
-public class Crazy implements Sample {
+public class Crazy extends Game {
 	
-	private String[] game = new String[] {
+	private String[] unsolvedGame = new String[] {
 			"-2-------",
 			"---6----3",
 			"-74-8----",
@@ -28,8 +28,8 @@ public class Crazy implements Sample {
 			"731852649",
 	};
 	
-	public String[] getGame() {
-		return game;
+	public String[] getUnsolvedGame() {
+		return unsolvedGame;
 	}
 	
 	public String[] getSolution() {

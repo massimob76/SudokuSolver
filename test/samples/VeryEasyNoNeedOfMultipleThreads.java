@@ -2,18 +2,18 @@ package samples;
 
 import user_interaction.Game;
 
-public class Intermediate extends Game {
+public class VeryEasyNoNeedOfMultipleThreads extends Game {
 	
 	private String[] unsolvedGame = new String[] {
-			"-2-6-8---",
-			"58---97--",
-			"----4----",
-			"37----5--",
-			"6-------4",
-			"--8----13",
-			"----2----",
-			"--98---36",
-			"---3-6-9-",
+			"-23678945",
+			"58423976-",
+			"967-45328",
+			"37246-589",
+			"69-583274",
+			"4587926-3",
+			"836924-57",
+			"2-9857436",
+			"7453-6892",
 	};
 	
 	private String[] solution = new String[] {
