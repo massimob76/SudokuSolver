@@ -2,11 +2,10 @@ package solver;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CompletionService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +22,12 @@ import static org.mockito.Mockito.*;
 public class BoardTest {
 	
 	private Board iut;
-	private ExecutorService execMock;
+	private CompletionService<Solution> execMock;
 	
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		execMock = mock(ExecutorService.class);
+		execMock = mock(CompletionService.class);
 		iut = new Board(execMock);
 	}
 	
@@ -94,6 +94,7 @@ public class BoardTest {
 		assertTrue(iut.isGameSolved());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testDelegatePossibleOptionsToOtherThreadsAndRetainOnlyOneOption() {
 		iut.addSolvedCell(new Cell(1,0,1));
@@ -104,7 +105,7 @@ public class BoardTest {
 		
 		Cell cellWithNoValueYet = new Cell(1,1);
 		
-		when(execMock.submit((Callable<?>)anyObject())).thenReturn(null);
+		when(execMock.submit((Callable<Solution>)anyObject())).thenReturn(null);
 
 		Cell firstOptionCell = iut.delegatePossibleOptionsToOtherThreadsAndRetainOnlyOneOption(cellWithNoValueYet);
 		assertEquals(cellWithNoValueYet, firstOptionCell);
@@ -185,20 +186,20 @@ public class BoardTest {
 	
 	@Test
 	public void boardCanSolveASimpleSudokuGame() {
-		List<Cell> expected = Utilities.loadSolution(new Intermediate());
-		List<Cell> solvedCells = filterOutCellsWithValueOne(expected);
+		List<Cell> solution = Utilities.loadSolution(new Intermediate());
+		List<Cell> solvedCells = filterOutCellsWithValueOne(solution);
 		iut.addSolvedCells(solvedCells);
-		List<Cell> actual = iut.call();
-		Collections.sort(actual);
+		Solution expected = new Solution(solution);
+		Solution actual = iut.call();
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	public void boardCanDetectWhenAGameCannotBeSolved() {
-		List<Cell> solvedGame = Utilities.loadSolution(new Intermediate());
-		List<Cell> impossibleGame = transformGame(solvedGame);
+		List<Cell> solution = Utilities.loadSolution(new Intermediate());
+		List<Cell> impossibleGame = transformGame(solution);
 		iut.addSolvedCells(impossibleGame);
-		List<Cell> actual = iut.call();
+		Solution actual = iut.call();
 		assertNull(actual);
 	}
 	

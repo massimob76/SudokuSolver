@@ -3,18 +3,18 @@ package solver;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CompletionService;
 
-public class Board implements Callable<List<Cell>> {
+public class Board implements Callable<Solution> {
 	
 	private static final int NO_OPTIONS = 0;
 	private static final int ONE_OPTION_ONLY = 1;
 	private final List<Cell> solvedCells;
 	private final List<Cell> missingCells;
 	private final RulesGuardian rulesGuardian;
-	private final ExecutorService exec;
+	private final CompletionService<Solution> exec;
 	
-	public Board(ExecutorService exec) {
+	public Board(CompletionService<Solution> exec) {
 		solvedCells = new LinkedList<Cell>();
 		missingCells = new LinkedList<Cell>();
 		initializeMissingCells();
@@ -22,7 +22,7 @@ public class Board implements Callable<List<Cell>> {
 		this.exec = exec;
 	}
 	
-	private Board(List<Cell> solvedCells, List<Cell> missingCells, RulesGuardian rulesGuardian, ExecutorService exec) {
+	private Board(List<Cell> solvedCells, List<Cell> missingCells, RulesGuardian rulesGuardian, CompletionService<Solution> exec) {
 		this.solvedCells = solvedCells;
 		this.missingCells = missingCells;
 		this.rulesGuardian = rulesGuardian;
@@ -62,7 +62,7 @@ public class Board implements Callable<List<Cell>> {
 	}
 
 	@Override
-	public List<Cell> call() {
+	public Solution call() {
 		
 		while (!isGameSolved()) {
 			Cell solvedCell = findNextSolvedCell();
@@ -72,7 +72,7 @@ public class Board implements Callable<List<Cell>> {
 				addSolvedCell(solvedCell);
 			}
 		}
-		return solvedCells;
+		return new Solution(solvedCells);
 	}
 	
 	boolean isGameSolved() {

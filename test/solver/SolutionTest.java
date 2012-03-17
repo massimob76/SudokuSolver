@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import samples.SampleTest;
+import user_interaction.Utilities;
+
 public class SolutionTest {
 	
 	private Solution iut;
@@ -44,5 +47,34 @@ public class SolutionTest {
 		iut = new Solution(list);
 		Solution otherSolution = new Solution(CellTest.getUnsortedListOfCells());
 		assertFalse(iut.equals(otherSolution));
+	}
+	
+	@Test
+	public void toStringCreatesANicelyFormattedOutputString() {
+		List<Cell> game = Utilities.loadGame(new SampleTest());
+		iut = new Solution(game);
+		String expected = 
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| |2| |6| |8| | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n|5|8| | | |9|7| | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n| | | | | | | | | |" +
+			"\n+-+-+-+-+-+-+-+-+-+" +
+			"\n";
+		String actual = iut.toString();
+		assertEquals(expected, actual);
 	}
 }
