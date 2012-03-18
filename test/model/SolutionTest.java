@@ -1,12 +1,12 @@
-package solver;
+package model;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
-
+import model.Cell;
 import org.junit.Test;
-
 import samples.PartialGame;
+
 
 public class SolutionTest {
 	
@@ -50,7 +50,7 @@ public class SolutionTest {
 	
 	@Test
 	public void toStringCreatesANicelyFormattedOutputString() {
-		List<Cell> game = new PartialGame().loadUnsolvedGame();
+		List<Cell> game = new PartialGame().getUnsolvedGame();
 		iut = new Solution(game);
 		String expected = 
 			"\n+-+-+-+-+-+-+-+-+-+" +

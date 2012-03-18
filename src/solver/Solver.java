@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import user_interaction.Game;
+import model.Cell;
+import model.Solution;
+
+import userInteraction.Game;
+import userInteraction.InteractiveGame;
 
 public class Solver {
 	
@@ -14,6 +18,12 @@ public class Solver {
 	
 	public Solver(Game game) {
 		this.game = game;
+	}
+	
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+		Solver solver = new Solver(new InteractiveGame());
+		Set<Solution> solutions = solver.solveIt();
+		System.out.println(solutions);
 	}
 	
 	public Set<Solution> timedSolveIt() throws InterruptedException, ExecutionException {
@@ -28,7 +38,7 @@ public class Solver {
 	}
 	
 	public Set<Solution> solveIt() throws InterruptedException, ExecutionException {
-		List<Cell> unsolvedGame = game.loadUnsolvedGame();
+		List<Cell> unsolvedGame = game.getUnsolvedGame();
 		SudokuExecutorCompletionService completionService = new SudokuExecutorCompletionService();
 		Board board = new Board(completionService);
 		board.addSolvedCells(unsolvedGame);

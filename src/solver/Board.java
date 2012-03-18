@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 
+import model.Cell;
+import model.Solution;
+
 public class Board implements Callable<Solution> {
 	
 	private static final int NO_OPTIONS = 0;

@@ -1,6 +1,6 @@
 package samples;
 
-import user_interaction.Game;
+import userInteraction.Game;
 
 public class Difficult2 extends Game {
 	
@@ -28,11 +28,11 @@ public class Difficult2 extends Game {
 			"789641532",
 	};
 	
-	public String[] getUnsolvedGame() {
+	public String[] getUnsolvedGameAsStringArray() {
 		return unsolvedGame;
 	}
 	
-	public String[] getSolution() {
+	public String[] getSolutionAsStringArray() {
 		return solution;
 	}	
 }

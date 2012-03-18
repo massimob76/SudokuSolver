@@ -1,23 +1,24 @@
-package user_interaction;
+package userInteraction;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import solver.Cell;
-import solver.Solution;
+import model.Cell;
+import model.Solution;
+
 
 public abstract class Game {
 	
-	public abstract String[] getUnsolvedGame();
+	public abstract String[] getUnsolvedGameAsStringArray();
 	
-	public abstract String[] getSolution();
+	public abstract String[] getSolutionAsStringArray();
 	
-	public List<Cell> loadUnsolvedGame() {
-		return convertArrayOfStringToCellList(getUnsolvedGame());
+	public List<Cell> getUnsolvedGame() {
+		return convertArrayOfStringToCellList(getUnsolvedGameAsStringArray());
 	}
 
-	public Solution loadSolution() {
-		List<Cell> list = convertArrayOfStringToCellList(getSolution());
+	public Solution getSolution() {
+		List<Cell> list = convertArrayOfStringToCellList(getSolutionAsStringArray());
 		return new Solution(list);
 	}
 	

@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import model.Solution;
+
 import org.junit.Test;
 
 import samples.Crazy;
@@ -12,7 +14,7 @@ import samples.Difficult1;
 import samples.Difficult2;
 import samples.Easy1;
 import samples.Easy2;
-import user_interaction.Game;
+import userInteraction.Game;
 
 
 public class SolverTest {
@@ -27,7 +29,7 @@ public class SolverTest {
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
-			assertEquals(game.loadSolution(), solution);
+			assertEquals(game.getSolution(), solution);
 		}
 		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
 	}
@@ -40,7 +42,7 @@ public class SolverTest {
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
-			assertEquals(game.loadSolution(), solution);
+			assertEquals(game.getSolution(), solution);
 		}
 		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
 	}
@@ -53,7 +55,7 @@ public class SolverTest {
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
-			assertEquals(game.loadSolution(), solution);
+			assertEquals(game.getSolution(), solution);
 		}
 		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
 	}
@@ -66,7 +68,7 @@ public class SolverTest {
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
-			assertEquals(game.loadSolution(), solution);
+			assertEquals(game.getSolution(), solution);
 		}
 		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
 	}
@@ -79,7 +81,7 @@ public class SolverTest {
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
-			assertEquals(game.loadSolution(), solution);
+			assertEquals(game.getSolution(), solution);
 		}
 		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
 	}

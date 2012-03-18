@@ -5,10 +5,11 @@ import static org.junit.Assert.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Cell;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import solver.Cell;
 import solver.RulesGuardian;
 
 public class RulesGuardianTest {

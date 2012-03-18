@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
+import model.Cell;
+import model.Solution;
+
 import org.junit.Before;
 import org.junit.Test;
 

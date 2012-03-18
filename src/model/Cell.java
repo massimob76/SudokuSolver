@@ -1,4 +1,4 @@
-package solver;
+package model;
 
 public class Cell implements Comparable<Cell> {
 	

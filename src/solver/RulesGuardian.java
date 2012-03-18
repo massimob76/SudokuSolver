@@ -3,6 +3,8 @@ package solver;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import model.Cell;
+
 public class RulesGuardian {
 	
 	private static final int NINE_BITS_MASK = Integer.parseInt("111111111", 2);

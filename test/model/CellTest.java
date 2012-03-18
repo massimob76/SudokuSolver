@@ -1,4 +1,4 @@
-package solver;
+package model;
 
 import static org.junit.Assert.*;
 
@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
+import model.Cell;
 
-import solver.Cell;
+import org.junit.Test;
 
 public class CellTest {
 	

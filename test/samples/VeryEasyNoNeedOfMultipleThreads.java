@@ -1,6 +1,6 @@
 package samples;
 
-import user_interaction.Game;
+import userInteraction.Game;
 
 public class VeryEasyNoNeedOfMultipleThreads extends Game {
 	
@@ -28,11 +28,11 @@ public class VeryEasyNoNeedOfMultipleThreads extends Game {
 			"745316892",
 	};
 	
-	public String[] getUnsolvedGame() {
+	public String[] getUnsolvedGameAsStringArray() {
 		return unsolvedGame;
 	}
 	
-	public String[] getSolution() {
+	public String[] getSolutionAsStringArray() {
 		return solution;
 	}
 }
