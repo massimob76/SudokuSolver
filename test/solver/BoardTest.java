@@ -2,8 +2,9 @@ package solver;
 
 import static org.junit.Assert.*;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 
@@ -34,33 +35,45 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void softCopyShouldReturnASoftCopyOfACellList() {
-		List<Cell> listA = new LinkedList<Cell>();
-		listA.add(new Cell(0,4));
-		listA.add(new Cell(3,5));
-		List<Cell> listB = Board.softCopy(listA);
-		assertEquals(listA, listB);
-		listA.add(new Cell(2,2,1));
-		assertTrue(listA.contains(new Cell(2,2,1)));
-		assertFalse(listB.contains(new Cell(2,2,1)));
+	public void softCopyShouldReturnASoftCopyOfACellSet() {
+		Set<Cell> setA = new HashSet<Cell>();
+		setA.add(new Cell(0,4));
+		setA.add(new Cell(3,5));
+		Set<Cell> setB = Board.softCopy(setA);
+		assertEquals(setA, setB);
+		setA.add(new Cell(2,2,1));
+		assertTrue(setA.contains(new Cell(2,2,1)));
+		assertFalse(setB.contains(new Cell(2,2,1)));
 	}
 	
 	@Test
-	public void hardCopyShouldReturnAHardCopyOfACellList() {
-		List<Cell> listA = new LinkedList<Cell>();
-		listA.add(new Cell(0,4));
-		listA.add(new Cell(3,5));
-		List<Cell> listB = Board.hardCopy(listA);
-		assertEquals(listA, listB);
-		listA.add(new Cell(2,2,1));
-		assertTrue(listA.contains(new Cell(2,2,1)));
-		assertFalse(listB.contains(new Cell(2,2,1)));
+	public void hardCopyShouldReturnAHardCopyOfACellSet() {
+		Cell aCell = new Cell(0,4);
+		Set<Cell> setA = new HashSet<Cell>();
+		setA.add(aCell);
+		setA.add(new Cell(3,5));
+		Set<Cell> setB = Board.hardCopy(setA);
+		assertEquals(setA, setB);
+		setA.add(new Cell(2,2,1));
+		assertTrue(setA.contains(new Cell(2,2,1)));
+		assertFalse(setB.contains(new Cell(2,2,1)));
 		int expectedValue = 7;
-		listA.get(0).setValue(expectedValue);
-		assertEquals(expectedValue, listA.get(0).getValue());
-		assertEquals(0, listB.get(0).getValue());
+		aCell.setValue(expectedValue);
+		verifySetContainsCellWithValue(setA, aCell, expectedValue);
+		expectedValue = 0;
+		verifySetContainsCellWithValue(setB, aCell, expectedValue);
 	}
 	
+	private void verifySetContainsCellWithValue(Set<Cell> set, Cell expectedCell, int expectedValue) {
+		for (Cell cell: set) {
+			if (cell.equals(expectedCell)) {
+				assertEquals(expectedValue, cell.getValue());
+				return;
+			}
+		}
+		fail();
+	}
+
 	@Test
 	public void cloneShouldReturnAnIndependentCopyOfTheBoard() {
 		Cell cellA = new Cell(1, 2, 4);
@@ -123,10 +136,12 @@ public class BoardTest {
 
 	private void verifyBoardContainsCellWithValue(List<Board> boards, Cell expectedCell, int[] expectedValues) {
 		for (int i = 0; i < boards.size(); i++) {
-			List<Cell> solvedCells = boards.get(i).getSolvedCells();
-			int index = solvedCells.indexOf(expectedCell);
-			Cell actualCell = solvedCells.get(index);
-			assertEquals(expectedValues[i], actualCell.getValue());
+			Set<Cell> solvedCells = boards.get(i).getSolvedCells();
+			for (Cell actualCell: solvedCells) {
+				if (actualCell.equals(expectedCell)) {
+					assertEquals(expectedValues[i], actualCell.getValue());
+				}
+			}
 		}
 	}
 	
@@ -189,7 +204,7 @@ public class BoardTest {
 	@Test
 	public void boardCanSolveASimpleSudokuGame() {
 		Game game = new VeryEasyNoNeedOfMultipleThreads();
-		List<Cell> solvedCells = game.getUnsolvedGame();
+		Set<Cell> solvedCells = game.getUnsolvedGame();
 		iut.addSolvedCells(solvedCells);
 		Solution expected = game.getSolution();
 		Solution actual = iut.call();
@@ -199,7 +214,7 @@ public class BoardTest {
 	@Test
 	public void boardCanDetectWhenAGameCannotBeSolved() {
 		Game game = new Impossible();
-		List<Cell> solvedCells = game.getUnsolvedGame();
+		Set<Cell> solvedCells = game.getUnsolvedGame();
 		iut.addSolvedCells(solvedCells);
 		Solution actual = iut.call();
 		assertNull(actual);

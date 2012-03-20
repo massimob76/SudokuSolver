@@ -1,6 +1,5 @@
 package solver;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -38,7 +37,7 @@ public class Solver {
 	}
 	
 	public Set<Solution> solveIt() throws InterruptedException, ExecutionException {
-		List<Cell> unsolvedGame = game.getUnsolvedGame();
+		Set<Cell> unsolvedGame = game.getUnsolvedGame();
 		SudokuExecutorCompletionService completionService = new SudokuExecutorCompletionService();
 		Board board = new Board(completionService);
 		board.addSolvedCells(unsolvedGame);

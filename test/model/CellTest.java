@@ -2,9 +2,8 @@ package model;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import model.Cell;
 
@@ -90,31 +89,12 @@ public class CellTest {
 	
 	@Test
 	public void itShouldBePossibleToSortACellList() {
-		List<Cell> list = getUnsortedListOfCells();
-		Collections.sort(list);
-		List<Cell> sortedList = getSortedListofCells();
-		assertEquals(sortedList, list);
+		SortedSet<Cell> set = new TreeSet<Cell>();
+		set.add(new Cell(2,3,3));
+		set.add(new Cell(1,4,5));
+		set.add(new Cell(1,3,1));
+		assertEquals(new Cell(1,3,1), set.first());
+		assertEquals(new Cell(1,4,5), set.last());
 	}
 
-	static List<Cell> getSortedListofCells() {
-		List<Cell> expectedList = new LinkedList<Cell>();
-		expectedList.add(new Cell(1,2,3));
-		expectedList.add(new Cell(4,3,7));
-		expectedList.add(new Cell(4,4,4));
-		expectedList.add(new Cell(2,5,1));
-		expectedList.add(new Cell(4,5,8));
-		expectedList.add(new Cell(3,6,3));
-		return expectedList;
-	}
-
-	static List<Cell> getUnsortedListOfCells() {
-		List<Cell> list = new LinkedList<Cell>();
-		list.add(new Cell(1,2,3));
-		list.add(new Cell(4,5,8));
-		list.add(new Cell(4,3,7));
-		list.add(new Cell(2,5,1));
-		list.add(new Cell(3,6,3));
-		list.add(new Cell(4,4,4));
-		return list;
-	}
 }

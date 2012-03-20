@@ -2,7 +2,11 @@ package model;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import model.Cell;
 import org.junit.Test;
 import samples.PartialGame;
@@ -14,43 +18,41 @@ public class SolutionTest {
 	
 	@Test
 	public void solutionsShouldContainSortedListOfCells() {
-		List<Cell> list = CellTest.getUnsortedListOfCells();
-		iut = new Solution(list);
-		List<Cell> expectedList = CellTest.getSortedListofCells();
-		List<Cell> actualList = iut.getSolution();
+		iut = new Solution(getSetOfCells());
+		SortedSet<Cell> expectedList = new TreeSet<Cell>(getSetOfCells());
+		SortedSet<Cell> actualList = iut.getSolution();
 		assertEquals(expectedList, actualList);
 	}
 	
 	@Test
 	public void solutionsShouldBeIndependentFromTheListOfCellsWhoHasGeneratedThem() {
-		List<Cell> list = CellTest.getUnsortedListOfCells();
-		iut = new Solution(list);
-		list.remove(0);
-		List<Cell> expectedList = CellTest.getSortedListofCells();
-		List<Cell> actualList = iut.getSolution();
+		Set<Cell> set = getSetOfCells();
+		iut = new Solution(set);
+		SortedSet<Cell> expectedList = new TreeSet<Cell>(set);
+		set.add(new Cell(1,1,1));
+		SortedSet<Cell> actualList = iut.getSolution();
 		assertEquals(expectedList, actualList);
 	}
 	
 	@Test
-	public void solutionsSholdBeEquilIfFormedByTheSameCells() {
-		iut = new Solution(CellTest.getUnsortedListOfCells());
-		Solution otherSolution = new Solution(CellTest.getUnsortedListOfCells());
+	public void solutionsSholdBeEqualIfFormedByTheSameCells() {
+		iut = new Solution(getSetOfCells());
+		Solution otherSolution = new Solution(getSetOfCells());
 		assertTrue(iut.equals(otherSolution));
 	}
 	
 	@Test
 	public void solutionsShouldBeNotEqualIfFormedByDifferentCells() {
-		List<Cell> list = CellTest.getUnsortedListOfCells();
-		list.remove(0);
-		list.add(new Cell(0,0,1));
-		iut = new Solution(list);
-		Solution otherSolution = new Solution(CellTest.getUnsortedListOfCells());
+		Set<Cell> set = getSetOfCells();
+		iut = new Solution(set);
+		set.add(new Cell(0,0,1));
+		Solution otherSolution = new Solution(set);
 		assertFalse(iut.equals(otherSolution));
 	}
 	
 	@Test
 	public void toStringCreatesANicelyFormattedOutputString() {
-		List<Cell> game = new PartialGame().getUnsolvedGame();
+		Set<Cell> game = new PartialGame().getUnsolvedGame();
 		iut = new Solution(game);
 		String expected = 
 			"\n+-+-+-+-+-+-+-+-+-+" +
@@ -75,5 +77,16 @@ public class SolutionTest {
 			"\n";
 		String actual = iut.toString();
 		assertEquals(expected, actual);
+	}
+	
+	private Set<Cell> getSetOfCells() {
+		Set<Cell> set = new HashSet<Cell>();
+		set.add(new Cell(1,2,3));
+		set.add(new Cell(4,3,7));
+		set.add(new Cell(4,4,4));
+		set.add(new Cell(2,5,1));
+		set.add(new Cell(4,5,8));
+		set.add(new Cell(3,6,3));
+		return set;
 	}
 }

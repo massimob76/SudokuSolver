@@ -1,7 +1,8 @@
 package solver;
 
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 
@@ -12,31 +13,31 @@ public class Board implements Callable<Solution> {
 	
 	private static final int NO_OPTIONS = 0;
 	private static final int ONE_OPTION_ONLY = 1;
-	private final List<Cell> solvedCells;
-	private final List<Cell> missingCells;
+	private final Set<Cell> solvedCells;
+	private final Set<Cell> missingCells;
 	private final RulesGuardian rulesGuardian;
 	private final CompletionService<Solution> exec;
 	
 	public Board(CompletionService<Solution> exec) {
-		solvedCells = new LinkedList<Cell>();
-		missingCells = new LinkedList<Cell>();
+		solvedCells = new HashSet<Cell>();
+		missingCells = new HashSet<Cell>();
 		initializeMissingCells();
 		rulesGuardian = new RulesGuardian();
 		this.exec = exec;
 	}
 	
-	private Board(List<Cell> solvedCells, List<Cell> missingCells, RulesGuardian rulesGuardian, CompletionService<Solution> exec) {
+	private Board(Set<Cell> solvedCells, Set<Cell> missingCells, RulesGuardian rulesGuardian, CompletionService<Solution> exec) {
 		this.solvedCells = solvedCells;
 		this.missingCells = missingCells;
 		this.rulesGuardian = rulesGuardian;
 		this.exec = exec;
 	}
 	
-	List<Cell> getSolvedCells() {
+	Set<Cell> getSolvedCells() {
 		return solvedCells;
 	}
 	
-	List<Cell> getMissingCells() {
+	Set<Cell> getMissingCells() {
 		return missingCells;
 	}
 	
@@ -48,16 +49,16 @@ public class Board implements Callable<Solution> {
 		return new Board(softCopy(solvedCells), hardCopy(missingCells), rulesGuardian.clone(), exec);
 	}
 	
-	static List<Cell> hardCopy(List<Cell> cells) {
-		LinkedList<Cell> copy = new LinkedList<Cell>();
+	static Set<Cell> hardCopy(Set<Cell> cells) {
+		Set<Cell> copy = new HashSet<Cell>();
 		for (Cell cell: cells) {
 			copy.add(cell.clone());
 		}
 		return copy;
 	}
 
-	static List<Cell> softCopy(List<Cell> cells) {
-		LinkedList<Cell> copy = new LinkedList<Cell>();
+	static Set<Cell> softCopy(Set<Cell> cells) {
+		Set<Cell> copy = new HashSet<Cell>();
 		for (Cell cell: cells) {
 			copy.add(cell);
 		}
@@ -82,7 +83,7 @@ public class Board implements Callable<Solution> {
 		return missingCells.isEmpty();
 	}
 	
-	public void addSolvedCells(List<Cell> solvedCells) {
+	public void addSolvedCells(Set<Cell> solvedCells) {
 		for (Cell solvedCell: solvedCells) {
 			addSolvedCell(solvedCell);
 		}

@@ -77,6 +77,11 @@ public class Cell implements Comparable<Cell> {
 		}
 	}
 	
+	@Override
+	public int hashCode() {
+		return row * (MAX_POS + 1) + col;
+	}
+	
 	private void verifyPosition(int pos) {
 		if (pos < MIN_POS || pos > MAX_POS) {
 			throw new OutOfBoundsValue("out of bound position: " + pos);

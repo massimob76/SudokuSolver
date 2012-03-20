@@ -1,22 +1,20 @@
 package model;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 
 public class Solution {
 	
-	private final List<Cell> sortedSolution;
+	private final SortedSet<Cell> sortedSolution;
 	
-	public Solution(List<Cell> solution) {
-		LinkedList<Cell> sortedSolution = new LinkedList<Cell>(solution);
-		Collections.sort(sortedSolution);
-		this.sortedSolution = sortedSolution;
+	public Solution(Set<Cell> solution) {
+		this.sortedSolution = new TreeSet<Cell>(solution);
 	}
 	
-	public List<Cell> getSolution() {
+	public SortedSet<Cell> getSolution() {
 		return sortedSolution;
 	}
 	
