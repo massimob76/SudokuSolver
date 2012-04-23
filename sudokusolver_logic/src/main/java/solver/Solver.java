@@ -12,37 +12,53 @@ import userInteraction.InteractiveGame;
 public class Solver {
 	
 	private final GameModel game;
+	private final boolean firstSolutionOnly;
 	private long startTime;
 	private long endTime;
+	private Set<Solution> solutions;
+	private Solution solution;
 	
-	public Solver(GameModel game) {
+	public Solver(GameModel game, boolean firstSolutionOnly) {
 		this.game = game;
+		this.firstSolutionOnly = firstSolutionOnly;
+	}
+	
+	public Set<Solution> getSolutions() {
+		return solutions;
+	}
+	
+	public Solution getSolution() {
+		return solution;
 	}
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		Solver solver = new Solver(new InteractiveGame());
-		Set<Solution> solutions = solver.solveIt();
+		Solver solver = new Solver(new InteractiveGame(), false);
+		solver.solveIt();
+		Set<Solution> solutions = solver.getSolutions();
 		System.out.println(solutions);
 	}
 	
-	public Set<Solution> timedSolveIt() throws InterruptedException, ExecutionException {
+	public void timedSolveIt() throws InterruptedException, ExecutionException {
 		startTime = System.currentTimeMillis();
-		Set<Solution> solutions = solveIt();
+		solveIt();
 		endTime = System.currentTimeMillis();
-		return solutions;
 	}
 	
 	public long getElapsed() {
 		return endTime - startTime;
 	}
 	
-	public Set<Solution> solveIt() throws InterruptedException, ExecutionException {
+	private void solveIt() throws InterruptedException, ExecutionException {
 		Set<Cell> unsolvedGame = game.getUnsolvedGame();
 		SudokuExecutorCompletionService completionService = new SudokuExecutorCompletionService();
 		Board board = new Board(completionService);
 		board.addSolvedCells(unsolvedGame);
 		completionService.submit(board);
-		return completionService.getSolutions();
+		if (firstSolutionOnly) {
+			solution = completionService.getFirstSolutionOnly();
+		} else {
+			solutions = completionService.getSolutions();
+		}
 	}
 
 }

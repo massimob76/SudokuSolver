@@ -24,8 +24,9 @@ public class SolverTest {
 	@Test
 	public void solveItCanSolveEasy1() throws InterruptedException, ExecutionException {
 		Sample game = new Easy1();
-		iut = new Solver(game);
-		Set<Solution> solutions = iut.timedSolveIt();
+		iut = new Solver(game, false);
+		iut.timedSolveIt();
+		Set<Solution> solutions = iut.getSolutions();
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
@@ -37,8 +38,9 @@ public class SolverTest {
 	@Test
 	public void solveItCanSolveEasy2() throws InterruptedException, ExecutionException {
 		Sample game = new Easy2();
-		iut = new Solver(game);
-		Set<Solution> solutions = iut.timedSolveIt();
+		iut = new Solver(game, false);
+		iut.timedSolveIt();
+		Set<Solution> solutions = iut.getSolutions();
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
@@ -50,8 +52,9 @@ public class SolverTest {
 	@Test
 	public void solveItCanSolveDifficult1() throws InterruptedException, ExecutionException {
 		Sample game = new Difficult1();
-		iut = new Solver(game);
-		Set<Solution> solutions = iut.timedSolveIt();
+		iut = new Solver(game, false);
+		iut.timedSolveIt();
+		Set<Solution> solutions = iut.getSolutions();
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
@@ -63,8 +66,9 @@ public class SolverTest {
 	@Test
 	public void solveItCanSolveDifficult2() throws InterruptedException, ExecutionException {
 		Sample game = new Difficult2();
-		iut = new Solver(game);
-		Set<Solution> solutions = iut.timedSolveIt();
+		iut = new Solver(game, false);
+		iut.timedSolveIt();
+		Set<Solution> solutions = iut.getSolutions();
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
@@ -76,13 +80,24 @@ public class SolverTest {
 	@Test
 	public void solveItCanSolveCrazy() throws InterruptedException, ExecutionException {
 		Sample game = new Crazy();
-		iut = new Solver(game);
-		Set<Solution> solutions = iut.timedSolveIt();
+		iut = new Solver(game, false);
+		iut.timedSolveIt();
+		Set<Solution> solutions = iut.getSolutions();
 		int noOfSolutions = 1;
 		assertEquals(noOfSolutions, solutions.size());
 		for (Solution solution: solutions) {
 			assertEquals(game.getSolution(), solution);
 		}
+		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
+	}
+	
+	@Test
+	public void solveItCanSolveCrazyWithFirstSolutionOnly() throws InterruptedException, ExecutionException {
+		Sample game = new Crazy();
+		iut = new Solver(game, true);
+		iut.timedSolveIt();
+		Solution solution = iut.getSolution();
+		assertEquals(game.getSolution(), solution);
 		System.out.println("Took: " + iut.getElapsed() + "ms to find a solution");
 	}
 	
