@@ -50,4 +50,18 @@ public class SudokuExecutorCompletionService extends ExecutorCompletionService<S
 		return solutions;
 	}
 	
+	public Solution getFirstSolutionOnly() throws InterruptedException, ExecutionException {
+		int noOfProcessedFutures = 0;
+		while (noOfProcessedFutures < noOfSubmittedTasks.get()) {
+			noOfProcessedFutures++;
+			Solution solution = take().get();
+			if (solution!=null) {
+				exec.shutdown();
+				return solution;
+			}
+		}
+		exec.shutdown();
+		return null;
+	}
+	
 }

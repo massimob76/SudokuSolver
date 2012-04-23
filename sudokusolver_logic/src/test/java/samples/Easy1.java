@@ -1,8 +1,8 @@
 package samples;
 
-import userInteraction.Game;
+import model.Sample;
 
-public class Easy1 extends Game {
+public class Easy1 extends Sample {
 	
 	private String[] unsolvedGame = new String[] {
 			"---26-7-1",
@@ -28,10 +28,12 @@ public class Easy1 extends Game {
 			"763418259",
 	};
 	
+	@Override
 	public String[] getUnsolvedGameAsStringArray() {
 		return unsolvedGame;
 	}
 	
+	@Override
 	public String[] getSolutionAsStringArray() {
 		return solution;
 	}

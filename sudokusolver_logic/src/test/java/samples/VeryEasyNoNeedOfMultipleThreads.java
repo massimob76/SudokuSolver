@@ -1,8 +1,8 @@
 package samples;
 
-import userInteraction.Game;
+import model.Sample;
 
-public class VeryEasyNoNeedOfMultipleThreads extends Game {
+public class VeryEasyNoNeedOfMultipleThreads extends Sample {
 	
 	private String[] unsolvedGame = new String[] {
 			"-23678945",
@@ -28,10 +28,12 @@ public class VeryEasyNoNeedOfMultipleThreads extends Game {
 			"745316892",
 	};
 	
+	@Override
 	public String[] getUnsolvedGameAsStringArray() {
 		return unsolvedGame;
 	}
 	
+	@Override
 	public String[] getSolutionAsStringArray() {
 		return solution;
 	}

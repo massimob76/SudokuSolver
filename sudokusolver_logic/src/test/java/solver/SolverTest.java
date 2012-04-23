@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import model.Sample;
 import model.Solution;
 
 import org.junit.Test;
@@ -14,7 +15,6 @@ import samples.Difficult1;
 import samples.Difficult2;
 import samples.Easy1;
 import samples.Easy2;
-import userInteraction.Game;
 
 
 public class SolverTest {
@@ -23,7 +23,7 @@ public class SolverTest {
 	
 	@Test
 	public void solveItCanSolveEasy1() throws InterruptedException, ExecutionException {
-		Game game = new Easy1();
+		Sample game = new Easy1();
 		iut = new Solver(game);
 		Set<Solution> solutions = iut.timedSolveIt();
 		int noOfSolutions = 1;
@@ -36,7 +36,7 @@ public class SolverTest {
 	
 	@Test
 	public void solveItCanSolveEasy2() throws InterruptedException, ExecutionException {
-		Game game = new Easy2();
+		Sample game = new Easy2();
 		iut = new Solver(game);
 		Set<Solution> solutions = iut.timedSolveIt();
 		int noOfSolutions = 1;
@@ -49,7 +49,7 @@ public class SolverTest {
 	
 	@Test
 	public void solveItCanSolveDifficult1() throws InterruptedException, ExecutionException {
-		Game game = new Difficult1();
+		Sample game = new Difficult1();
 		iut = new Solver(game);
 		Set<Solution> solutions = iut.timedSolveIt();
 		int noOfSolutions = 1;
@@ -62,7 +62,7 @@ public class SolverTest {
 	
 	@Test
 	public void solveItCanSolveDifficult2() throws InterruptedException, ExecutionException {
-		Game game = new Difficult2();
+		Sample game = new Difficult2();
 		iut = new Solver(game);
 		Set<Solution> solutions = iut.timedSolveIt();
 		int noOfSolutions = 1;
@@ -75,7 +75,7 @@ public class SolverTest {
 	
 	@Test
 	public void solveItCanSolveCrazy() throws InterruptedException, ExecutionException {
-		Game game = new Crazy();
+		Sample game = new Crazy();
 		iut = new Solver(game);
 		Set<Solution> solutions = iut.timedSolveIt();
 		int noOfSolutions = 1;

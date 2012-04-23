@@ -4,18 +4,18 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import model.Cell;
+import model.GameModel;
 import model.Solution;
 
-import userInteraction.Game;
 import userInteraction.InteractiveGame;
 
 public class Solver {
 	
-	private final Game game;
+	private final GameModel game;
 	private long startTime;
 	private long endTime;
 	
-	public Solver(Game game) {
+	public Solver(GameModel game) {
 		this.game = game;
 	}
 	

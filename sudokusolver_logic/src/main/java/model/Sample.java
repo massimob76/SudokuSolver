@@ -1,13 +1,10 @@
-package userInteraction;
+package model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import model.Cell;
-import model.Solution;
 
-
-public abstract class Game {
+public abstract class Sample implements GameModel {
 	
 	public abstract String[] getUnsolvedGameAsStringArray();
 	

@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 
 import model.Cell;
+import model.Sample;
 import model.Solution;
 
 import org.junit.Before;
@@ -18,7 +19,6 @@ import org.mockito.ArgumentCaptor;
 import samples.Impossible;
 import samples.VeryEasyNoNeedOfMultipleThreads;
 import solver.Board;
-import userInteraction.Game;
 
 import static org.mockito.Mockito.*;
 
@@ -203,7 +203,7 @@ public class BoardTest {
 	
 	@Test
 	public void boardCanSolveASimpleSudokuGame() {
-		Game game = new VeryEasyNoNeedOfMultipleThreads();
+		Sample game = new VeryEasyNoNeedOfMultipleThreads();
 		Set<Cell> solvedCells = game.getUnsolvedGame();
 		iut.addSolvedCells(solvedCells);
 		Solution expected = game.getSolution();
@@ -213,7 +213,7 @@ public class BoardTest {
 	
 	@Test
 	public void boardCanDetectWhenAGameCannotBeSolved() {
-		Game game = new Impossible();
+		Sample game = new Impossible();
 		Set<Cell> solvedCells = game.getUnsolvedGame();
 		iut.addSolvedCells(solvedCells);
 		Solution actual = iut.call();

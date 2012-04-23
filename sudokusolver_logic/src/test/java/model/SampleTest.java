@@ -1,4 +1,4 @@
-package userInteraction;
+package model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,18 +6,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import model.Cell;
+import model.Sample;
 import model.Solution;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import samples.PartialGame;
-import userInteraction.Game;
 
 
-public class GameTest {
+public class SampleTest {
 	
-	private Game iut;
+	private Sample iut;
 	
 	@Before
 	public void setUp() {

@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import userInteraction.Game;
+import model.Sample;
 
-public class InteractiveGame extends Game {
+
+public class InteractiveGame extends Sample {
 	
 	private static final int ROWS = 9;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
+	@Override
 	public String[] getUnsolvedGameAsStringArray() {
 		String[] unsolvedGame = new String[ROWS];
 		try {
@@ -29,6 +31,7 @@ public class InteractiveGame extends Game {
 		return unsolvedGame;
 	}
 	
+	@Override
 	public String[] getSolutionAsStringArray() {
 		return null;
 	}

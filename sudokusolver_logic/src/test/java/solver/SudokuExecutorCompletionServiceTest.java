@@ -23,6 +23,27 @@ public class SudokuExecutorCompletionServiceTest {
 	}
 	
 	@Test
+	public void getSolutionsShouldReturnNullWhenThereAreNoSolutions() throws InterruptedException, ExecutionException {
+		iut.submit(generateTask(0, 300));
+		iut.submit(generateTask(0, 200));
+		iut.submit(generateTask(0, 400));
+		iut.submit(generateTask(0, 500));
+		Set<Solution> expected = new HashSet<Solution>();
+		Set<Solution> actual = iut.getSolutions();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void getFirstSolutionOnlyShouldReturnNullWhenThereAreNoSolutions() throws InterruptedException, ExecutionException {
+		iut.submit(generateTask(0, 300));
+		iut.submit(generateTask(0, 200));
+		iut.submit(generateTask(0, 400));
+		iut.submit(generateTask(0, 500));
+		Solution actual = iut.getFirstSolutionOnly();
+		assertNull(actual);
+	}
+	
+	@Test
 	public void getSolutionsShouldReturnOnlyOneSolutionWhenThereIsOnlyOneSolution() throws InterruptedException, ExecutionException {
 		iut.submit(generateTask(0, 300));
 		iut.submit(generateTask(0, 200));
@@ -31,6 +52,17 @@ public class SudokuExecutorCompletionServiceTest {
 		Set<Solution> expected = new HashSet<Solution>();
 		expected.add(new Solution(createSet(1)));
 		Set<Solution> actual = iut.getSolutions();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void getFirstSolutionOnlyShouldReturnOnlyOneSolutionWhenThereIsOnlyOneSolution() throws InterruptedException, ExecutionException {
+		iut.submit(generateTask(0, 300));
+		iut.submit(generateTask(0, 200));
+		iut.submit(generateTask(1, 400));
+		iut.submit(generateTask(0, 500));
+		Solution expected = new Solution(createSet(1));
+		Solution actual = iut.getFirstSolutionOnly();
 		assertEquals(expected, actual);
 	}
 	
@@ -45,6 +77,18 @@ public class SudokuExecutorCompletionServiceTest {
 		expected.add(new Solution(createSet(1)));
 		expected.add(new Solution(createSet(2)));
 		Set<Solution> actual = iut.getSolutions();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void getFirstSolutionOnlyShouldReturnOneSolutionWhenThereAreTwoSolutions() throws InterruptedException, ExecutionException {
+		iut.submit(generateTask(0, 300));
+		iut.submit(generateTask(0, 200));
+		iut.submit(generateTask(1, 400));
+		iut.submit(generateTask(0, 500));
+		iut.submit(generateTask(2, 500));
+		Solution expected = new Solution(createSet(1));
+		Solution actual = iut.getFirstSolutionOnly();
 		assertEquals(expected, actual);
 	}
 
