@@ -91,7 +91,7 @@ public class Board implements Callable<Solution> {
 
 	public void addSolvedCell(Cell solvedCell) {
 		rulesGuardian.addCellValue(solvedCell);
-		missingCells.remove(solvedCell);
+		missingCells.remove(solvedCell.cloneWithoutValue());
 		solvedCells.add(solvedCell);
 	}
 	
@@ -105,8 +105,7 @@ public class Board implements Callable<Solution> {
 				return null;
 			case ONE_OPTION_ONLY:
 				int onlyPossibleValue = rulesGuardian.getPossibleValuesPerCell(cell).get(0);
-				cell.setValue(onlyPossibleValue);
-				return cell;
+				return cell.cloneSettingValue(onlyPossibleValue);
 			default:
 				if (noOfOptionsForCellWithLessOptions==-1 || noOfOptionsForCellWithLessOptions > noOfPossibleValues) {
 					noOfOptionsForCellWithLessOptions = noOfPossibleValues;
@@ -121,14 +120,12 @@ public class Board implements Callable<Solution> {
 		LinkedList<Integer> possibleValuesPerCell = rulesGuardian.getPossibleValuesPerCell(cellWithLessPossibleOptions);
 		int possibleValuesHead = possibleValuesPerCell.pop();
 		startSeparateThreadsForEachOption(cellWithLessPossibleOptions, possibleValuesPerCell);
-		cellWithLessPossibleOptions.setValue(possibleValuesHead);
-		return cellWithLessPossibleOptions;
+		return cellWithLessPossibleOptions.cloneSettingValue(possibleValuesHead);
 	}
 
 	private void startSeparateThreadsForEachOption(Cell cellWithLessPossibleOptions, LinkedList<Integer> possibleValuesPerCell) {
 		for (Integer value: possibleValuesPerCell) {
-			Cell clonedCell = cellWithLessPossibleOptions.clone();
-			clonedCell.setValue(value);
+			Cell clonedCell = cellWithLessPossibleOptions.cloneSettingValue(value);
 			Board clonedBoard = this.clone();
 			clonedBoard.addSolvedCell(clonedCell);
 			exec.submit(clonedBoard);

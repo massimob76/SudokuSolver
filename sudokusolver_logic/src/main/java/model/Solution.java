@@ -11,7 +11,19 @@ public class Solution {
 	private final SortedSet<Cell> sortedSolution;
 	
 	public Solution(Set<Cell> solution) {
+		if (solution.size() != Cell.NO_OF_CELLS) {
+			throw new IncompleteSolutionException("Solution contained " + solution.size() 
+					+ " cells instead of " + Cell.NO_OF_CELLS + "; solution: " + solution);
+		}
 		this.sortedSolution = new TreeSet<Cell>(solution);
+	}
+	
+	@SuppressWarnings("serial")
+	static class IncompleteSolutionException extends IllegalArgumentException {
+		
+		public IncompleteSolutionException(String msg) {
+			super(msg);
+		}
 	}
 	
 	public SortedSet<Cell> getSolution() {

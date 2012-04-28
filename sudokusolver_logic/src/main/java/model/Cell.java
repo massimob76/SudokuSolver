@@ -6,32 +6,34 @@ public class Cell implements Comparable<Cell> {
 	public static final int MAX_POS = 8;
 	private static final int MIN_VALUE = 1;
 	private static final int MAX_VALUE = 9;
+	public static final int NO_OF_CELLS = 81;
 	
 	@SuppressWarnings("serial")
-	public class OutOfBoundsValue extends RuntimeException {
+	public class OutOfBoundsValueException extends IllegalArgumentException {
 		
-		public OutOfBoundsValue(String msg) {
+		public OutOfBoundsValueException(String msg) {
 			super(msg);
 		}
 	}
 
 	private final int row, col, square;
-	private int value;
+	private final Integer value;
 	
 	public Cell(int col, int row) {
+		this(col, row, null);
+	}
+	
+	public Cell(int col, int row, Integer value) {
 		verifyPosition(col);
 		verifyPosition(row);
+		verifyValue(value);
 		this.row = row;
 		this.col = col;
 		this.square = (row / 3) * 3 + col / 3;
+		this.value = value;
 	}
 	
-	public Cell(int col, int row, int value) {
-		this(col, row);
-		setValue(value);
-	}
-	
-	private Cell(int col, int row, int square, int value) {
+	private Cell(int col, int row, int square, Integer value) {
 		this.col = col;
 		this.row = row;
 		this.square = square;
@@ -40,6 +42,15 @@ public class Cell implements Comparable<Cell> {
 	
 	public Cell clone() {
 		return new Cell(this.col, this.row, this.square, this.value);
+	}
+	
+	public Cell cloneWithoutValue() {
+		return new Cell(this.col, this.row, this.square, null);
+	}
+	
+	public Cell cloneSettingValue(Integer value) {
+		verifyValue(value);
+		return new Cell(this.col, this.row, this.square, value);
 	}
 	
 	public int getRow() {
@@ -54,12 +65,7 @@ public class Cell implements Comparable<Cell> {
 		return square;
 	}
 	
-	public void setValue(int value) {
-		verifyValue(value);
-		this.value = value;
-	}
-	
-	public int getValue() {
+	public Integer getValue() {
 		return value;
 	}
 	
@@ -71,7 +77,15 @@ public class Cell implements Comparable<Cell> {
 	public boolean equals(Object o) {
 		if (o instanceof Cell) {
 			Cell otherCell = (Cell)o;
-			return (otherCell.col == this.col) && (otherCell.row == this.row);
+			if ((otherCell.col == this.col) && (otherCell.row == this.row)) {
+				if (otherCell.value == null) {
+					return this.value == null;
+				} else {
+					return otherCell.value.equals(this.value);
+				}
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -84,13 +98,13 @@ public class Cell implements Comparable<Cell> {
 	
 	private void verifyPosition(int pos) {
 		if (pos < MIN_POS || pos > MAX_POS) {
-			throw new OutOfBoundsValue("out of bound position: " + pos);
+			throw new OutOfBoundsValueException("out of bound position: " + pos);
 		}
 	}
-	
-	private void verifyValue(int value) {
-		if (value < MIN_VALUE || value > MAX_VALUE) {
-			throw new OutOfBoundsValue("out of bound value: " + value);
+
+	private void verifyValue(Integer value) {
+		if (value != null && (value < MIN_VALUE || value > MAX_VALUE)) {
+			throw new OutOfBoundsValueException("out of bound value: " + value);
 		}
 	}
 
@@ -100,7 +114,12 @@ public class Cell implements Comparable<Cell> {
 		if (rowDiff!=0) {
 			return rowDiff;
 		} else {
-			return col - otherCell.col;
+			int colDiff = col - otherCell.col;
+			if (colDiff!=0) {
+				return colDiff;
+			} else {
+				return value - otherCell.value;
+			}
 		}
 	}
 }

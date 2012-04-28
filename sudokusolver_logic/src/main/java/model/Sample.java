@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public abstract class Sample implements GameModel {
+public abstract class Sample implements Game {
 	
 	public abstract String[] getUnsolvedGameAsStringArray();
 	

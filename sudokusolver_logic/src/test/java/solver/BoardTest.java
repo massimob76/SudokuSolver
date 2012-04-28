@@ -57,41 +57,31 @@ public class BoardTest {
 		setA.add(new Cell(2,2,1));
 		assertTrue(setA.contains(new Cell(2,2,1)));
 		assertFalse(setB.contains(new Cell(2,2,1)));
-		int expectedValue = 7;
-		aCell.setValue(expectedValue);
-		verifySetContainsCellWithValue(setA, aCell, expectedValue);
-		expectedValue = 0;
-		verifySetContainsCellWithValue(setB, aCell, expectedValue);
-	}
-	
-	private void verifySetContainsCellWithValue(Set<Cell> set, Cell expectedCell, int expectedValue) {
-		for (Cell cell: set) {
-			if (cell.equals(expectedCell)) {
-				assertEquals(expectedValue, cell.getValue());
-				return;
-			}
-		}
-		fail();
+		setA.remove(aCell);
+		setA.add(new Cell(0,4,7));
+		assertTrue(setA.contains(new Cell(0,4,7)));
+		assertTrue(setB.contains(new Cell(0,4)));
 	}
 
 	@Test
 	public void cloneShouldReturnAnIndependentCopyOfTheBoard() {
 		Cell cellA = new Cell(1, 2, 4);
+		Cell cellB = new Cell(1, 1, 5);
+		Cell cellC = new Cell(1, 3);
 		iut.addSolvedCell(cellA);
 		Board cloned = iut.clone();
-		Cell cellB = new Cell(1, 1, 5);
 		iut.addSolvedCell(cellB);
-		Cell cellC = new Cell(1, 3);
+		
 		assertTrue(iut.getSolvedCells().contains(cellA));
-		assertFalse(iut.getMissingCells().contains(cellA));
+		assertFalse(iut.getMissingCells().contains(cellA.cloneWithoutValue()));
 		assertTrue(iut.getSolvedCells().contains(cellB));
-		assertFalse(iut.getMissingCells().contains(cellB));
+		assertFalse(iut.getMissingCells().contains(cellB.cloneWithoutValue()));
 		assertEquals(7, iut.getRulesGuardian().getNumberOfPossibleValuesPerCell(cellC));
 
 		assertTrue(cloned.getSolvedCells().contains(cellA));
-		assertFalse(cloned.getMissingCells().contains(cellA));
+		assertFalse(cloned.getMissingCells().contains(cellA.cloneWithoutValue()));
 		assertFalse(cloned.getSolvedCells().contains(cellB));
-		assertTrue(cloned.getMissingCells().contains(cellB));
+		assertTrue(cloned.getMissingCells().contains(cellB.cloneWithoutValue()));
 		assertEquals(8, cloned.getRulesGuardian().getNumberOfPossibleValuesPerCell(cellC));
 	}
 	
@@ -123,18 +113,17 @@ public class BoardTest {
 		when(execMock.submit((Callable<Solution>)anyObject())).thenReturn(null);
 
 		Cell firstOptionCell = iut.delegatePossibleOptionsToOtherThreadsAndRetainOnlyOneOption(cellWithNoValueYet);
-		assertEquals(cellWithNoValueYet, firstOptionCell);
-		assertEquals(6, firstOptionCell.getValue());
+		assertEquals(cellWithNoValueYet.cloneSettingValue(6), firstOptionCell);
 		
 		ArgumentCaptor<Board> argument = ArgumentCaptor.forClass(Board.class);
-		int[] expectedValues = new int[]{7, 8, 9};
+		Integer[] expectedValues = new Integer[]{7, 8, 9};
 		verify(execMock, times(expectedValues.length)).submit(argument.capture());
 		
 		verifyBoardContainsCellWithValue(argument.getAllValues(), cellWithNoValueYet, expectedValues);
 		
 	}
 
-	private void verifyBoardContainsCellWithValue(List<Board> boards, Cell expectedCell, int[] expectedValues) {
+	private void verifyBoardContainsCellWithValue(List<Board> boards, Cell expectedCell, Integer[] expectedValues) {
 		for (int i = 0; i < boards.size(); i++) {
 			Set<Cell> solvedCells = boards.get(i).getSolvedCells();
 			for (Cell actualCell: solvedCells) {
@@ -195,10 +184,9 @@ public class BoardTest {
 	private static Cell getCellFromSudokuDummyTemplate(int col, int row) {
 		int colInSquare = col % 3;
 		int rowInSquare = row % 3;
-		Cell cell = new Cell(col, row);
-		int value = rowInSquare + colInSquare * 3 + cell.getSquare();
-		cell.setValue(value % 9 + 1);
-		return cell;
+		int square = (row / 3) * 3 + col / 3;
+		int value = (rowInSquare + colInSquare * 3 + square) % 9 + 1;
+		return new Cell(col, row, value);
 	}
 	
 	@Test

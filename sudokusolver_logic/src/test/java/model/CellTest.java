@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import model.Cell;
+import model.Cell.OutOfBoundsValueException;
 
 import org.junit.Test;
 
@@ -17,9 +18,8 @@ public class CellTest {
 		assertCellValues(8, 3, 5, 7);
 	}
 	
-	private void assertCellValues(int col, int row, int square, int value) {
-		Cell cell = new Cell(col, row);
-		cell.setValue(value);
+	private void assertCellValues(int col, int row, int square, Integer value) {
+		Cell cell = new Cell(col, row, value);
 		assertEquals(row, cell.getRow());
 		assertEquals(col, cell.getCol());
 		assertEquals(square, cell.getSquare());
@@ -40,7 +40,7 @@ public class CellTest {
 		try {
 			new Cell(col, row);
 			fail();
-		} catch (Cell.OutOfBoundsValue e) {
+		} catch (Cell.OutOfBoundsValueException e) {
 		}
 	}
 	
@@ -48,19 +48,12 @@ public class CellTest {
 		try {
 			new Cell(col, row, value);
 			fail();
-		} catch (Cell.OutOfBoundsValue e) {
+		} catch (Cell.OutOfBoundsValueException e) {
 		}
 	}
 	
 	@Test
-	public void cellsWithSamePositionShouldBeConsideredEqual() {
-		Cell cellA = new Cell(3,5,7);
-		Cell cellB = new Cell(3,5);
-		assertTrue(cellA.equals(cellB));
-	}
-	
-	@Test
-	public void cellsWithDistinctPositionShouldBeConsideredNotEqual() {
+	public void distinctCellsShouldNotBeConsideredEqual() {
 		Cell cellA = new Cell(1,5,7);
 		Cell cellB = new Cell(3,5);
 		assertFalse(cellA.equals(cellB));
@@ -71,10 +64,9 @@ public class CellTest {
 		int expectedCol = 1;
 		int expectedRow = 5;
 		int expectedSquare = 3;
-		int expectedValue = 7;
-		Cell cellA = new Cell(expectedCol, expectedRow);
+		Integer expectedValue = 7;
+		Cell cellA = new Cell(expectedCol, expectedRow, expectedValue);
 		Cell cellB = cellA.clone();
-		cellA.setValue(expectedValue);
 		
 		assertEquals(expectedCol, cellA.getCol());
 		assertEquals(expectedRow, cellA.getRow());
@@ -84,7 +76,38 @@ public class CellTest {
 		assertEquals(expectedCol, cellB.getCol());
 		assertEquals(expectedRow, cellB.getRow());
 		assertEquals(expectedSquare, cellB.getSquare());
-		assertEquals(0, cellB.getValue());
+		assertEquals(expectedValue, cellB.getValue());
+	}
+	
+	@Test
+	public void cloneWithoutValueShouldReturnACloneOfTheCellWithNoValue() {
+		Cell cell = new Cell(1,2,3);
+		Cell expected = new Cell(1,2);
+		Cell actual = cell.cloneWithoutValue();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void cloneSettingValueShouldCloneTheCellAndResetTheValue() {
+		Cell cell = new Cell(1,2,3);
+		int expectedValue = 4;
+		Cell expected = new Cell(1,2,4);
+		Cell actual = cell.cloneSettingValue(expectedValue);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void cloneSettingValueShouldCheckForTheValidityOfTheValue() {
+		Cell cell = new Cell(1,2,3);
+		int outOfBoundValue = 10;
+		try {
+			cell.cloneSettingValue(outOfBoundValue);
+			fail();
+		} catch(OutOfBoundsValueException e) {
+			String expectedMsg = "out of bound value: 10";
+			String actualMsg = e.getMessage();
+			assertEquals(expectedMsg, actualMsg);
+		}
 	}
 	
 	@Test

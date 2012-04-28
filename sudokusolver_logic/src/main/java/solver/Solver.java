@@ -4,21 +4,21 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import model.Cell;
-import model.GameModel;
+import model.Game;
 import model.Solution;
 
 import userInteraction.InteractiveGame;
 
 public class Solver {
 	
-	private final GameModel game;
+	private final Game game;
 	private final boolean firstSolutionOnly;
 	private long startTime;
 	private long endTime;
 	private Set<Solution> solutions;
 	private Solution solution;
 	
-	public Solver(GameModel game, boolean firstSolutionOnly) {
+	public Solver(Game game, boolean firstSolutionOnly) {
 		this.game = game;
 		this.firstSolutionOnly = firstSolutionOnly;
 	}

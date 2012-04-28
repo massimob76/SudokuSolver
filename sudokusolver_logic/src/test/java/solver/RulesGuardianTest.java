@@ -23,15 +23,13 @@ public class RulesGuardianTest {
 	
 	@Test
 	public void addCellValueShouldSucceedIfThatValueIsAPossibleValue() {
-		Cell cell = new Cell(0, 1);
-		cell.setValue(2);
+		Cell cell = new Cell(0, 1, 2);
 		iut.addCellValue(cell);
 	}
 	
 	@Test
 	public void addCellValueShouldThrowAnExceptionIfThatValueIsNotAcceptableAccordinglyToSudokuRules() {
-		Cell cell = new Cell(0, 1);
-		cell.setValue(2);
+		Cell cell = new Cell(0, 1, 2);
 		iut.addCellValue(cell);
 		try {
 			iut.addCellValue(cell);
