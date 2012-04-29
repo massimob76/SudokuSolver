@@ -28,7 +28,6 @@
 		
 		<table>
 		<% 
-			Iterator<Cell> iter = solution.getSolution().iterator();
 			for (int row = 0; row < 9; row++)  {
 		%>
 			<tr>

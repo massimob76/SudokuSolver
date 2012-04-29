@@ -36,25 +36,33 @@ td.c2, td.c5, td.c8 {
 	border-right-width: 2px;
 }
 
-input.cell {
-	font-family: Comic Sans MS;
-	font-size: large;
+.cell input {
 	border: 0px;
-	width: 20px;
-	height: 20px;
-	text-align: center;
 }
 
-div.submit {
+.cell input, .cell {
+	font-family: Comic Sans MS;
+	font-size: large;
+	width: 22px;
+	height: 26px;
+	text-align: center;
+	padding: 0px;
+}
+
+div.submit, div.back {
 	margin-top: 25px;
 	text-align: center;
 }
 
-input.submit {
+input.submit, .back button {
 	font-family: Comic Sans MS;
 	font-size: large;
 	border-radius: 10px;
 	background-color: SteelBlue;
 	height: 34px;
 	width: 100px;
+}
+
+.back a {
+	text-decoration:none;
 }
