@@ -30,8 +30,8 @@
           <contextPath>sudokusolver</contextPath>
 		  <systemProperties>
             <systemProperty>
-              <name>java.util.logging.config.file</name>
-              <value>src/main/resources/logging.properties</value>
+              <name>logging.properties</name>
+              <value>src/main/webapp/WEB-INF/logging.properties</value>
             </systemProperty>
           </systemProperties>
         </configuration>

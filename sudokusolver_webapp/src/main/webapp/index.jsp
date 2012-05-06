@@ -1,6 +1,6 @@
+<%@page import="java.util.logging.LogManager, java.io.FileInputStream, java.io.IOException"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="workflow.WebInteractionImpl"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,12 +10,21 @@
 </head>
 <body>
 	<h1 class="title">Sudoku Game Solver</h1>
-	<%
+	<%!
+		{	
+			try {
+				Class.forName("utils.LoggerInitializer");
+			} catch (ClassNotFoundException e) {
+				//ignored
+			}
+		}
+	%>
+	<%	
 		String errorMsg = "";
-		WebInteractionImpl interaction = null;
+		workflow.WebInteractionImpl interaction = null;
 		boolean solutionFound = false;
 		if (request.getMethod().equals("POST")) {
-			interaction = new WebInteractionImpl();
+			interaction = new workflow.WebInteractionImpl();
 			for (int row = 0; row < 9; row++) {
 				for (int col = 0; col < 9; col++) {
 					String value = request.getParameter("r" + row + "c" + col);

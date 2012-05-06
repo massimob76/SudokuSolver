@@ -19,8 +19,10 @@ public class WebInteractionImpl implements WebInteraction {
 	private Iterator<Cell> iter;
 	private long elapsedTime;
 
+
 	@Override
 	public boolean addCellOfUnsolvedGame(int col, int row, String valueAsString) {
+		LOG.fine("this is a fine test");
 		try {
 			int value = Integer.valueOf(valueAsString);
 			unsolvedGame.add(new Cell(col, row, Integer.valueOf(value)));
