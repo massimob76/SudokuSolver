@@ -1,14 +1,5 @@
 @CHARSET "UTF-8";
 
-.title, .subtitle {
-	font-family: Comic Sans MS;
-	text-align: center;
-}
-
-.subtitle {
-	margin-bottom: 15px;
-}
-
 table {
 	margin-left: auto;
 	margin-right: auto;
@@ -49,12 +40,25 @@ td.c2, td.c5, td.c8 {
 	padding: 0px;
 }
 
-div.submit, div.back {
-	margin-top: 25px;
+.title, .subtitle, .elapsedTime, .error, .submit, .back {
+	font-family: Comic Sans MS;
 	text-align: center;
 }
 
-input.submit, .back button {
+.elapsedTime, .error, .submit, .back {
+	margin-top: 25px;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+}
+
+.subtitle {
+	margin-bottom: 15px;
+}
+
+.submit input, .back button {
 	font-family: Comic Sans MS;
 	font-size: large;
 	border-radius: 10px;

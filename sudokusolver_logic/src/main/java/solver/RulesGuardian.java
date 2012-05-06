@@ -2,10 +2,14 @@ package solver;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Cell;
 
 public class RulesGuardian {
+	
+	private static final Logger LOG = Logger.getLogger(RulesGuardian.class.getName());
 	
 	private static final int NINE_BITS_MASK = Integer.parseInt("111111111", 2);
 	private int[] v = new int[9];
@@ -40,6 +44,9 @@ public class RulesGuardian {
 	}
 	
 	public void addCellValue(Cell cell) {
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("added cell value: " + cell);
+		}
 		int valueInBits = 1 << (cell.getValue() - 1);
 		verifyCellValueInBits(valueInBits, cell);
 		addCellValueInBits(valueInBits, cell);
@@ -70,6 +77,9 @@ public class RulesGuardian {
 				possibleValues.add(value);
 			}
 			index <<= 1;
+		}
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("possible values per cell: " + cell + " values: " + possibleValues);
 		}
 		return possibleValues;
 	}

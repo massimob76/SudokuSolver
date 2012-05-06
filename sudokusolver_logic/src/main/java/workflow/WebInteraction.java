@@ -1,4 +1,4 @@
-package userInteraction;
+package workflow;
 
 public interface WebInteraction {
 	

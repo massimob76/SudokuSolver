@@ -1,4 +1,4 @@
-package userInteraction;
+package workflow;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -5,11 +5,15 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Cell;
 import model.Solution;
 
 public class Board implements Callable<Solution> {
+	
+	private static final Logger LOG = Logger.getLogger(Board.class.getName());
 	
 	private static final int NO_OPTIONS = 0;
 	private static final int ONE_OPTION_ONLY = 1;
@@ -102,10 +106,15 @@ public class Board implements Callable<Solution> {
 			int noOfPossibleValues = rulesGuardian.getNumberOfPossibleValuesPerCell(cell);
 			switch (noOfPossibleValues) {
 			case NO_OPTIONS:
+				LOG.fine("No solution has been found for this board");
 				return null;
 			case ONE_OPTION_ONLY:
 				int onlyPossibleValue = rulesGuardian.getPossibleValuesPerCell(cell).get(0);
-				return cell.cloneSettingValue(onlyPossibleValue);
+				Cell retVal = cell.cloneSettingValue(onlyPossibleValue);
+				if (LOG.isLoggable(Level.FINE)) {
+					LOG.fine("Found one cell value: " + retVal);
+				}
+				return retVal;
 			default:
 				if (noOfOptionsForCellWithLessOptions==-1 || noOfOptionsForCellWithLessOptions > noOfPossibleValues) {
 					noOfOptionsForCellWithLessOptions = noOfPossibleValues;
@@ -113,7 +122,11 @@ public class Board implements Callable<Solution> {
 				}
 			}
 		}
-		return delegatePossibleOptionsToOtherThreadsAndRetainOnlyOneOption(cellWithLessPossibleOptions);
+		Cell retVal = delegatePossibleOptionsToOtherThreadsAndRetainOnlyOneOption(cellWithLessPossibleOptions);
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("Found multiple solutions and one is: " + retVal);
+		}
+		return retVal;
 	}
 	
 	Cell delegatePossibleOptionsToOtherThreadsAndRetainOnlyOneOption(Cell cellWithLessPossibleOptions) {
@@ -124,6 +137,9 @@ public class Board implements Callable<Solution> {
 	}
 
 	private void startSeparateThreadsForEachOption(Cell cellWithLessPossibleOptions, LinkedList<Integer> possibleValuesPerCell) {
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("starting separate threads for cell: " + cellWithLessPossibleOptions + " with possible values: " + possibleValuesPerCell);
+		}
 		for (Integer value: possibleValuesPerCell) {
 			Cell clonedCell = cellWithLessPossibleOptions.cloneSettingValue(value);
 			Board clonedBoard = this.clone();

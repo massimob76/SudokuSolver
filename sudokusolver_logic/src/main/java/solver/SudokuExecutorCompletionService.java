@@ -9,10 +9,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Solution;
 
 public class SudokuExecutorCompletionService extends ExecutorCompletionService<Solution> {
+	
+	private static final Logger LOG = Logger.getLogger(SudokuExecutorCompletionService.class.getName());
 	
 	private final AtomicInteger noOfSubmittedTasks = new AtomicInteger(0);
 	private final ExecutorService exec;
@@ -32,6 +36,9 @@ public class SudokuExecutorCompletionService extends ExecutorCompletionService<S
 
 	@Override
 	public Future<Solution> submit(Callable<Solution> task) {
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("submitted task: " + task);
+		}
 		noOfSubmittedTasks.incrementAndGet();
 		return super.submit(task);
 	}
@@ -47,6 +54,9 @@ public class SudokuExecutorCompletionService extends ExecutorCompletionService<S
 			}
 		}
 		exec.shutdown();
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine("found " + solutions.size() + " solutions");
+		}
 		return solutions;
 	}
 	
@@ -57,10 +67,12 @@ public class SudokuExecutorCompletionService extends ExecutorCompletionService<S
 			Solution solution = take().get();
 			if (solution!=null) {
 				exec.shutdown();
+				LOG.fine("found one solution");
 				return solution;
 			}
 		}
 		exec.shutdown();
+		LOG.fine("found none solutions");
 		return null;
 	}
 	

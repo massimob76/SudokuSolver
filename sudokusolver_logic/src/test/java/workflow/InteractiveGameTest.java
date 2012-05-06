@@ -1,4 +1,4 @@
-package userInteraction;
+package workflow;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import userInteraction.InteractiveGame;
+import workflow.InteractiveGame;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 

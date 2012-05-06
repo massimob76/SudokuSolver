@@ -7,7 +7,7 @@ import model.Cell;
 import model.Game;
 import model.Solution;
 
-import userInteraction.InteractiveGame;
+import workflow.InteractiveGame;
 
 public class Solver {
 	

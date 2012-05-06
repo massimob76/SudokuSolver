@@ -28,6 +28,12 @@
         <artifactId>maven-jetty-plugin</artifactId>
         <configuration>
           <contextPath>sudokusolver</contextPath>
+		  <systemProperties>
+            <systemProperty>
+              <name>java.util.logging.config.file</name>
+              <value>src/main/resources/logging.properties</value>
+            </systemProperty>
+          </systemProperties>
         </configuration>
       </plugin>
     </plugins>
