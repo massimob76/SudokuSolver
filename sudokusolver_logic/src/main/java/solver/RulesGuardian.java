@@ -34,10 +34,14 @@ public class RulesGuardian {
 	}
 	
 	@SuppressWarnings("serial")
-	public class IllegalValue extends RuntimeException {
+	public class IllegalValue extends IllegalArgumentException {
 		
 		public IllegalValue(Cell cell) {
-			super("Illegal value trying to add "
+			super("Illegal value trying to add value "
+					+ cell.getValue() 
+					+ " for cell (" + (cell.getCol() + 1)
+					+ "," + (cell.getRow() + 1) + ")");
+			LOG.severe("Illegal value trying to add "
 					+ cell.toString() + " "
 					+ RulesGuardian.this.toString());
 		}

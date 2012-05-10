@@ -22,15 +22,17 @@ public class WebInteractionImpl implements WebInteraction {
 
 	@Override
 	public boolean addCellOfUnsolvedGame(int col, int row, String valueAsString) {
-		LOG.fine("this is a fine test");
-		try {
-			int value = Integer.valueOf(valueAsString);
-			unsolvedGame.add(new Cell(col, row, Integer.valueOf(value)));
-			return true;
-		} catch (IllegalArgumentException e) {
-			LOG.severe("Could not add cell of unsolved game: " + e);
-			return false;
+		if (valueAsString != "") {
+			try {
+				int value = Integer.valueOf(valueAsString);
+				unsolvedGame.add(new Cell(col, row, Integer.valueOf(value)));
+				return true;
+			} catch (IllegalArgumentException e) {
+				LOG.severe("Could not add cell of unsolved game: " + e);
+				return false;
+			}
 		}
+		return false;
 	}
 
 	@Override

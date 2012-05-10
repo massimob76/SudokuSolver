@@ -1,4 +1,5 @@
-<%@page import="java.util.logging.LogManager, java.io.FileInputStream, java.io.IOException"%>
+<%@page import="utils.LoggerInitializer"%>
+<%@page import="java.util.logging.LogManager, java.io.FileInputStream, java.io.IOException, utils.LoggerInitializer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,18 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="sudoku.css">
+<script type="text/javascript" src="sudoku.js"></script>
 <title>Sudoku Game</title>
 </head>
 <body>
 	<h1 class="title">Sudoku Game Solver</h1>
 	<%!
-		{	
-			try {
-				Class.forName("utils.LoggerInitializer");
-			} catch (ClassNotFoundException e) {
-				//ignored
-			}
-		}
+		LoggerInitializer loggerInitializer;
 	%>
 	<%	
 		String errorMsg = "";
@@ -28,9 +24,7 @@
 			for (int row = 0; row < 9; row++) {
 				for (int col = 0; col < 9; col++) {
 					String value = request.getParameter("r" + row + "c" + col);
-					if (!value.equals("")) {
-						interaction.addCellOfUnsolvedGame(col, row, value);
-					}
+					interaction.addCellOfUnsolvedGame(col, row, value);
 				}
 			}
 
@@ -67,7 +61,7 @@
 	</table>
 	<div class="elapsedTime">
 		solution found in
-		<%=interaction.getElapsedTime()%>>ms
+		<%=interaction.getElapsedTime()%>ms
 	</div>
 	<div class="back">
 		<button onclick="window.open(window.location, '_self');">Go
@@ -87,9 +81,12 @@
 			<tr>
 				<%
 					for (int col = 0; col < 9; col++) {
+						String value = request.getParameter("r" + row + "c" + col);
+						value = (value==null) ? "" : value;
 				%>
-				<td class="cell c<%=row % 3 * 3 + col % 3%>"><input type="text"
-					name="<%="r" + row + "c" + col%>" maxlength="1" /></td>
+				<td class="cell c<%=row % 3 * 3 + col % 3%>">
+					<input type="text" name="<%="r" + row + "c" + col%>" value="<%= value %>" maxlength="1" onclick="cell_values_correct()" />
+				</td>
 				<%
 					}
 				%>
@@ -98,11 +95,11 @@
 				}
 			%>
 		</table>
-		<div class="error">
+		<div id="errorMsg" class="error">
 			<%=errorMsg%>
 		</div>
 		<div class="submit">
-			<input type="button" value="Solve it!" onclick="submit()" />
+			<input type="button" value="Solve it!" onclick="if (cell_values_correct()) {submit()}" />
 		</div>
 	</form>
 

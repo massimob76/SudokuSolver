@@ -45,13 +45,17 @@ td.c2, td.c5, td.c8 {
 	text-align: center;
 }
 
-.elapsedTime, .error, .submit, .back {
+.elapsedTime, div.error, .submit, .back {
 	margin-top: 25px;
 }
 
-.error {
+div.error {
 	color: red;
 	font-weight: bold;
+}
+
+input.error {
+	background-color: red;
 }
 
 .subtitle {

@@ -39,6 +39,7 @@ public class WebInteractionImplTest {
 		assertFalse(iut.addCellOfUnsolvedGame(0, 0, "a"));
 		assertFalse(iut.addCellOfUnsolvedGame(0, 0, "10"));
 		assertFalse(iut.addCellOfUnsolvedGame(0, 0, "0"));
+		assertFalse(iut.addCellOfUnsolvedGame(0, 0, ""));
 		Set<Cell> expected = new TreeSet<Cell>();
 		expected.add(new Cell(0,8,1));
 		expected.add(new Cell(8,0,9));

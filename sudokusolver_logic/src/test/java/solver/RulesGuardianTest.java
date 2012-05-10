@@ -35,9 +35,7 @@ public class RulesGuardianTest {
 			iut.addCellValue(cell);
 			fail();
 		} catch(RulesGuardian.IllegalValue e) {
-			String expected = "solver.RulesGuardian$IllegalValue: Illegal value trying to add "
-				+ "cell: (0,1) value: 2 "
-				+ "indexes:  vertical: 10, 0, 0, 0, 0, 0, 0, 0, 0,  horizontal: 0, 10, 0, 0, 0, 0, 0, 0, 0,  square: 10, 0, 0, 0, 0, 0, 0, 0, 0, ";
+			String expected = "solver.RulesGuardian$IllegalValue: Illegal value trying to add value 2 for cell (1,2)";
 			assertEquals(expected, e.toString());
 		}
 	}
