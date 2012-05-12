@@ -19,7 +19,6 @@ public class WebInteractionImpl implements WebInteraction {
 	private Iterator<Cell> iter;
 	private long elapsedTime;
 
-
 	@Override
 	public boolean addCellOfUnsolvedGame(int col, int row, String valueAsString) {
 		if (valueAsString != "") {

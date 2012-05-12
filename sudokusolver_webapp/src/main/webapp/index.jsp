@@ -12,9 +12,7 @@
 </head>
 <body onload="keydown_listener();">
 	<h1 class="title">Sudoku Game Solver</h1>
-	<%!
-		LoggerInitializer loggerInitializer;
-	%>
+	<%! { LoggerInitializer.initialize(); } %>
 	<%	
 		String errorMsg = "";
 		workflow.WebInteractionImpl interaction = null;

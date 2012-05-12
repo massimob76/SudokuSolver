@@ -11,7 +11,7 @@ public class LoggerInitializer {
 	
 	private static final String PROP_NAME = "logging.properties";
 	
-	static {
+	public static final void initialize() {
 		String loggingProperties = System.getProperty(PROP_NAME);
 		if (loggingProperties == null) {
 			LOG.severe("Could not find property: " + PROP_NAME);
@@ -23,6 +23,10 @@ public class LoggerInitializer {
 				LOG.severe("Could not load up logger configuration file at: " + loggingProperties);
 			}			
 		}
+	}
+	
+	public void test() {
+		
 	}
 
 }
