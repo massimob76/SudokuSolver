@@ -10,7 +10,7 @@
 <script type="text/javascript" src="sudoku.js"></script>
 <title>Sudoku Game</title>
 </head>
-<body>
+<body onload="keydown_listener();">
 	<h1 class="title">Sudoku Game Solver</h1>
 	<%!
 		LoggerInitializer loggerInitializer;
@@ -64,8 +64,7 @@
 		<%=interaction.getElapsedTime()%>ms
 	</div>
 	<div class="back">
-		<button onclick="window.open(window.location, '_self');">Go
-			back</button>
+		<button onclick="window.open(window.location, '_self');">Another game</button>
 	</div>
 
 	<%
@@ -85,7 +84,8 @@
 						value = (value==null) ? "" : value;
 				%>
 				<td class="cell c<%=row % 3 * 3 + col % 3%>">
-					<input type="text" name="<%="r" + row + "c" + col%>" value="<%= value %>" maxlength="1" onclick="cell_values_correct()" />
+					<input type="text" name="<%="r" + row + "c" + col%>" value="<%= value %>" maxlength="1" 
+					onclick="cell_values_correct();" onkeydown="cell_values_correct();" />
 				</td>
 				<%
 					}

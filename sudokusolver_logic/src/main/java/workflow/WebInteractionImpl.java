@@ -52,7 +52,7 @@ public class WebInteractionImpl implements WebInteraction {
 		solution = solver.getSolution();
 		LOG.info("solution found: " + solution);
 		if (solution==null) {
-			throw new NoSolutionFound("Could not find any solution");
+			throw new NoSolutionFound("No solutions for this game!");
 		}
 		elapsedTime = solver.getElapsed();
 		iter = solution.getSolution().iterator();
