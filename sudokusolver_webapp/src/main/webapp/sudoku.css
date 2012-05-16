@@ -58,6 +58,10 @@ input.error {
 	background-color: red;
 }
 
+td.solution {
+	background-color: green;
+}
+
 .subtitle {
 	margin-bottom: 15px;
 }

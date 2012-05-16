@@ -46,8 +46,11 @@
 		<tr>
 			<%
 				for (int col = 0; col < 9; col++) {
+					int value = interaction.getNextCellValueFromSolvedGame();
+					boolean isSolution = !Integer.toString(value).equals(request.getParameter("r" + row + "c" + col));
 			%>
-			<td class="cell c<%=row % 3 * 3 + col % 3%>"><%=interaction.getNextCellValueFromSolvedGame()%>
+			<td class="cell c<%=row % 3 * 3 + col % 3%> <%=isSolution?"solution":"" %>">
+				<%=value%>
 			</td>
 			<%
 				}
