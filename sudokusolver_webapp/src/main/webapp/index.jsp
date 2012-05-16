@@ -2,42 +2,46 @@
 <%@page import="java.util.logging.LogManager, java.io.FileInputStream, java.io.IOException, utils.LoggerInitializer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%! { LoggerInitializer.initialize(); } %>
+<%	
+	String errorMsg = "";
+	workflow.WebInteractionImpl interaction = null;
+	boolean solutionFound = false;
+	if (request.getMethod().equals("POST")) {
+		interaction = new workflow.WebInteractionImpl();
+		for (int row = 0; row < 9; row++) {
+			for (int col = 0; col < 9; col++) {
+				String value = request.getParameter("r" + row + "c" + col);
+				interaction.addCellOfUnsolvedGame(col, row, value);
+			}
+		}
+
+		try {
+			interaction.solveIt();
+			solutionFound = true;
+		} catch (Exception e) {
+			errorMsg = e.getMessage();
+		}
+	}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="sudoku.css">
 <script type="text/javascript" src="sudoku.js"></script>
+<script type="text/javascript">
+	var page='<%=solutionFound? "solution" : errorMsg.equals("")? "landing" : "error" %>'
+</script>
+<script type="text/javascript" src="analyticsTracking.js"></script>
 <title>Sudoku Game</title>
 </head>
 <body onload="keydown_listener();">
 	<h1 class="title">Sudoku Game Solver</h1>
-	<%! { LoggerInitializer.initialize(); } %>
-	<%	
-		String errorMsg = "";
-		workflow.WebInteractionImpl interaction = null;
-		boolean solutionFound = false;
-		if (request.getMethod().equals("POST")) {
-			interaction = new workflow.WebInteractionImpl();
-			for (int row = 0; row < 9; row++) {
-				for (int col = 0; col < 9; col++) {
-					String value = request.getParameter("r" + row + "c" + col);
-					interaction.addCellOfUnsolvedGame(col, row, value);
-				}
-			}
-
-			try {
-				interaction.solveIt();
-				solutionFound = true;
-			} catch (Exception e) {
-				errorMsg = e.getMessage();
-			}
-
-		}
-
+	
+	<%
 		if (solutionFound) {
 	%>
-
 	<div class="subtitle">Solution:</div>
 	<table>
 		<%
