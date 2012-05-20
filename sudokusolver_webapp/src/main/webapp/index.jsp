@@ -69,7 +69,7 @@
 		<%=interaction.getElapsedTime()%>ms
 	</div>
 	<div class="back">
-		<button onclick="window.open(window.location, '_self');">Another game</button>
+		<button onclick="window.open(window.location, '_self');">Start again</button>
 	</div>
 
 	<%
@@ -111,6 +111,9 @@
 	<%
 		}
 	%>
+	<div class="author">
+		<a href="http://www.linkedin.com/pub/massimo-battestini/16/155/407" target="_blank">About the author</a>
+	</div>
 </body>
 
 </html>

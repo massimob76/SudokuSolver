@@ -40,12 +40,12 @@ td.c2, td.c5, td.c8 {
 	padding: 0px;
 }
 
-.title, .subtitle, .elapsedTime, .error, .submit, .back {
+.title, .subtitle, .elapsedTime, .error, .submit, .back, .author {
 	font-family: Comic Sans MS;
 	text-align: center;
 }
 
-.elapsedTime, div.error, .submit, .back {
+.elapsedTime, div.error, .submit, .back, .author {
 	margin-top: 25px;
 }
 
@@ -75,6 +75,7 @@ td.solution {
 	width: 145px;
 }
 
-.back a {
+.back a, .author a {
 	text-decoration:none;
 }
+
