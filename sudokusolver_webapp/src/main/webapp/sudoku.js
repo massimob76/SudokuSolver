@@ -40,9 +40,9 @@ function values_correct() {
 		for (col = 0; col < 9; col++) {
 			element = document.getElementsByName("r" + row + "c" + col)[0];
 			if (valid(element.value)) {
-				element.classList.remove("error");
+				element.className = "";
 			} else {
-				element.classList.add("error");
+				element.className = "error";
 				correct = false;				
 			}
 		}
@@ -114,6 +114,28 @@ function cell_values_correct() {
 	}
 	return false;
 }
+
+document.onkeydown = keydown;  
+
+function keydown(event) {  
+    var code;  
+    var e;  
+    if (document.all) {  
+        if (!event) {  
+            var e = window.event;  
+            code = e.keyCode;  
+        }  
+    }  
+    else if (event.which) {  
+    code = event.which;  
+    e = event;  
+    }  
+    if (code == 9) {
+    	cell_values_correct();
+    }  
+}  
+
+
 
 
 

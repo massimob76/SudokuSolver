@@ -36,7 +36,7 @@
 <script type="text/javascript" src="analyticsTracking.js"></script>
 <title>Sudoku Game</title>
 </head>
-<body onload="keydown_listener();">
+<body onload="document.onkeydown = keydown;">
 	<h1 class="title">Sudoku Game Solver</h1>
 	
 	<%
@@ -90,7 +90,7 @@
 				%>
 				<td class="cell c<%=row % 3 * 3 + col % 3%>">
 					<input type="text" name="<%="r" + row + "c" + col%>" value="<%= value %>" maxlength="1" 
-					onclick="cell_values_correct();" onkeydown="cell_values_correct();" />
+					onclick="cell_values_correct();" />
 				</td>
 				<%
 					}
@@ -112,7 +112,7 @@
 		}
 	%>
 	<div class="author">
-		<a href="http://www.linkedin.com/pub/massimo-battestini/16/155/407" target="_blank">About the author</a>
+		<a href="http://www.linkedin.com/pub/massimo-battestini/16/155/407" target="_blank">About the author...</a>
 	</div>
 </body>
 
