@@ -22,10 +22,10 @@ function myset() {
 function check_unique_element(set, row, col) {
 	element = document.getElementsByName("r" + row + "c" + col)[0];
 	if (set.add(element.value)) {
-		element.classList.remove("error");
+		element.className = "";
 		return true;
 	} else {
-		element.classList.add("error");
+		element.className = "error";
 		return false;				
 	}
 }
