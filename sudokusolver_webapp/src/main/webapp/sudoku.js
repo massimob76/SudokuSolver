@@ -1,7 +1,10 @@
 
 function set_error_msg(msg) {
-	errorMsg = document.getElementById("errorMsg").childNodes[0];
-	errorMsg.data = msg;
+	var fieldNameElement = document.getElementById("errorMsg");
+  	while(fieldNameElement.childNodes.length >= 1) {
+  		fieldNameElement.removeChild(fieldNameElement.firstChild);
+  	}
+  	fieldNameElement.appendChild(fieldNameElement.ownerDocument.createTextNode(msg));
 }
 
 function myset() {
