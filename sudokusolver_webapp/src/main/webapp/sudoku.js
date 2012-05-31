@@ -121,7 +121,7 @@ function keydown(event) {
     var code;  
     var e;  
     if (document.all) {  
-        if (!event) {  
+        if (event) {  
             var e = window.event;  
             code = e.keyCode;  
         }  
