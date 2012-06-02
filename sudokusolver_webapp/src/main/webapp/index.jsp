@@ -36,7 +36,7 @@
 <script type="text/javascript" src="analyticsTracking.js"></script>
 <title>Sudoku Game</title>
 </head>
-<body onload="document.onkeydown = keydown;">
+<body onload="document.onkeydown = keydown_with_ie_fix;">
 	<h1 class="title">Sudoku Game Solver</h1>
 	
 	<%

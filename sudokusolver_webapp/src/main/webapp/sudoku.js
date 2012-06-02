@@ -118,7 +118,11 @@ function cell_values_correct() {
 	return false;
 }
 
-document.onkeydown = keydown;  
+function keydown_with_ie_fix(oEvent) {
+  if (typeof(oEvent) == "undefined")
+     oEvent = event;
+  keydown(oEvent);
+}
 
 function keydown(event) {  
     var code;  
@@ -130,15 +134,15 @@ function keydown(event) {
         }  
     }  
     else if (event.which) {  
-    code = event.which;  
-    e = event;  
+    	code = event.which;  
+    	e = event;  
     }  
     if (code == 9) {
     	cell_values_correct();
     }  
 }  
 
-
+document.onkeydown = keydown_with_ie_fix;
 
 
 
